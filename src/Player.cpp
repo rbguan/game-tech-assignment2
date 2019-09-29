@@ -1,42 +1,33 @@
-#include "game.h"
+#include "Player.h"
 
 using namespace godot;
 
-void Game::_register_methods() {
-	register_method("_process", &Game::_process);
+void Player::_register_methods() {
+	register_method("_process", &Player::_process);
+	register_method("_physics_process", &Player::_physics_process);
 	//register_property<Game, float>("amplitude", &Game::amplitude, 10.0);
 	
 }
 
-Game::Game() {
+Player::Player() {
 }
 
-Game::~Game() {
+Player::~Player() {
 	// add your cleanup here
 }
 
 
-void Game::_init() {
-	// initialize any variables here
-	time_passed = 0.0;
-	amplitude = 1;
-	speed = 0.1;
-	ball1Vel = speed * Vector3((amplitude + rand() % 2), (amplitude + rand() % 2), (amplitude + rand() % 2));
-	//ball1Vel = Vector3(0, 1, 0);
-	//ball2Vel = Vector3(0, -1, 0);
-	ball2Vel = Vector3((amplitude + rand() % 2), (amplitude + rand() % 2), (amplitude + rand() % 2));
-	ball3Vel = Vector3((amplitude + rand() % 2), (amplitude + rand() % 2), (amplitude + rand() % 2));
-	velocities.push_back(ball1Vel.normalized());
-	velocities.push_back(ball2Vel.normalized());
-	velocities.push_back(ball3Vel.normalized());
-}
-
-void Game::_process(float delta) {
-	//ball1 = Object::cast_to<MeshInstance>(get_node("ball1"));
-	
+void Player::_init() {
 
 }
 
-void Game::_physics_process() {
+void Player::_process(float delta) {
 
+}
+
+void Player::_physics_process(float delta) {
+	// bool left = Input::get_singleton().is_key_pressed(65);
+	// if(Input::is_key_pressed(65)){
+	// 	Godot::print("W pressed");
+	// }
 }
