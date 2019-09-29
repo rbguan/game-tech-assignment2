@@ -5,48 +5,15 @@
     "tasks": [
         {
             "type": "shell",
-            "label": "build X11",
+            "label": "build",
             "command": "scons",
             "args": [
-                "platform=x11"
+                "platform=windows",
+                "target=debug",
+                "-j",
+                "4"
             ],
-            "options": {
-                "cwd": "${workspaceFolder}/.."
-            },
-            "problemMatcher": [
-                "$msCompile"
-            ],
-            "group": "build"
-        },
-        {
-            "type": "shell",
-            "label": "build OSX",
-            "command": "scons",
-            "args": [
-                "platform=osx"
-            ],
-            "options": {
-                "cwd": "${workspaceFolder}/.."
-            },
-            "problemMatcher": [
-                "$msCompile"
-            ],
-            "group": "build"
-        },
-        {
-            "type": "shell",
-            "label": "build Windows",
-            "command": "scons",
-            "args": [
-                "platform=windows"
-            ],
-            "options": {
-                "cwd": "${workspaceFolder}/.."
-            },
-            "problemMatcher": [
-                "$msCompile"
-            ],
-            "group": "build"
+            "problemMatcher": "$msCompile"
         }
     ]
 }
