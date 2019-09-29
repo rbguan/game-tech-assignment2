@@ -10,6 +10,7 @@
 #include <Input.hpp>
 #include <InputEvent.hpp>
 #include <vector>
+#include <KinematicBody.hpp>
 
 namespace godot {
 
@@ -28,6 +29,8 @@ namespace godot {
 		float airResistance;
 		float airControlLevel;
 		float turnSpeed;
+		Input* input;
+		KinematicBody* me;
 
 	public:
 		static void _register_methods();
