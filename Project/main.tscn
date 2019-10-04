@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://bin/player.gdns" type="Script" id=1]
+[ext_resource path="res://bin/gamestatemanager.gdns" type="Script" id=1]
+[ext_resource path="res://bin/player.gdns" type="Script" id=2]
 
 [sub_resource type="CylinderShape" id=1]
 
@@ -14,10 +15,11 @@ albedo_color = Color( 0.937255, 0.219608, 1, 1 )
 [sub_resource type="BoxShape" id=5]
 
 [node name="Spatial" type="Spatial"]
+script = ExtResource( 1 )
 
 [node name="Player" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.29434, 8.65463 )
-script = ExtResource( 1 )
+script = ExtResource( 2 )
 gravity = -10.0
 jumpForce = 500.0
 
