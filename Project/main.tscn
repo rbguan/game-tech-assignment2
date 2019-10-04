@@ -33,7 +33,8 @@ mesh = SubResource( 2 )
 material/0 = SubResource( 3 )
 
 [node name="Camera" type="Camera" parent="Player/KinematicBody-player"]
-transform = Transform( -0.0262555, -0.311152, 0.949997, -0.00859617, 0.95036, 0.311033, -0.999618, -3.72671e-09, -0.0276269, 25.6845, 8.31939, 0 )
+transform = Transform( -0.0262555, -0.311152, 0.949997, -0.00859617, 0.95036, 0.311033, -0.999618, -3.72671e-09, -0.0276269, 11.6496, 1.56213, 0 )
+current = true
 
 [node name="Environment" type="Spatial" parent="."]
 
