@@ -26,8 +26,8 @@ void GameStateManager::_ready() {
 
 void GameStateManager::_process(float delta) {
 	timeRemaining -= delta;
-	if (timeRemaining <= 0.0) {
-		printf("OUT OF TIME");
+	//if (timeRemaining <= 0.0) {
+		//printf("OUT OF TIME");
 		//Game is now over
-	}
+	//}
 }
