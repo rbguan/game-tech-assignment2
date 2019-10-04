@@ -18,6 +18,13 @@ namespace godot {
 		GODOT_CLASS(Player, Area)
 
 	private:
+		
+		Input* input;
+		KinematicBody* me;
+		Vector3 velocity;
+		float currentGravity;
+
+	public:
 		bool isGliding;
 		bool movementMode;
 		bool isJumping;
@@ -29,10 +36,6 @@ namespace godot {
 		float airResistance;
 		float airControlLevel;
 		float turnSpeed;
-		Input* input;
-		KinematicBody* me;
-
-	public:
 		static void _register_methods();
 
 		Player();
@@ -42,6 +45,7 @@ namespace godot {
 
 		void _process(float delta);
 		void _physics_process(float delta);
+		void _ready();
 
 	};
 
