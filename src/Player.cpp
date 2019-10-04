@@ -72,7 +72,6 @@ void Player::_physics_process(float delta) {
 		velocity.y += currentGravity;
 		currentGravity *= 1 + delta;
 	} else{
-		
 		currentGravity = gravity;
 	}
 	if(me->is_on_floor()) {
