@@ -25,10 +25,11 @@ namespace godot {
 		float currentGravity;
 
 	public:
-		bool isGliding;
+		bool isGliding = false;
 		bool movementMode;
-		bool isJumping;
-		bool isFalling;
+		bool isJumping = false;
+		bool isFalling = false;
+        bool isDashing = false;
 		float maxWalkAngle;
 		float moveSpeed;
 		float jumpForce;

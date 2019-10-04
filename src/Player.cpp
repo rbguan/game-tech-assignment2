@@ -40,6 +40,7 @@ void Player::_physics_process(float delta) {
 	bool forward = input->is_key_pressed(87);
 	bool back = input->is_key_pressed(83);
 	bool jump = input->is_key_pressed(32);
+    bool dash = input->is_key_pressed(69);
 	
 	if(left){
 		//Godot::print("A pressed");
@@ -63,6 +64,10 @@ void Player::_physics_process(float delta) {
 		velocity.y += jumpForce;
 		currentGravity = gravity;
 	}
+    if (dash && !isDashing && isJumping) {
+        isDashing = true;
+        velocity.x -= 200;
+    }
 	if(!me->is_on_floor()){
 		velocity.y += currentGravity;
 		currentGravity *= 1 + delta;
@@ -72,6 +77,7 @@ void Player::_physics_process(float delta) {
 	}
 	if(me->is_on_floor()) {
 		isJumping = false;
+        isDashing = false;
 		//currentGravity = 0;
 		}
 	me->move_and_slide(velocity, Vector3(0,1,0));
