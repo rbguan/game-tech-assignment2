@@ -1,8 +1,7 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://bin/gamestatemanager.gdns" type="Script" id=1]
-[ext_resource path="res://bin/player.gdns" type="Script" id=2]
-[ext_resource path="res://floor.tres" type="Material" id=3]
+[ext_resource path="res://floor.tres" type="Material" id=2]
 
 [sub_resource type="CylinderShape" id=1]
 
@@ -30,8 +29,6 @@ script = ExtResource( 1 )
 [node name="Player" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 19.2899, 3.13913, -7.42542 )
 script = ExtResource( 1 )
-gravity = -10.0
-jumpForce = 500.0
 
 [node name="KinematicBody-player" type="KinematicBody" parent="Player"]
 
@@ -61,6 +58,7 @@ visible = false
 transform = Transform( 1, 0, 0, 0, 1, -2.84217e-14, 0, 0, 1, 0, 0, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Environment/MeshInstance/StaticBody"]
+transform = Transform( 1, 0, -7.10543e-15, 1.00974e-28, 1, -5.0822e-21, 7.10543e-15, 0, 1, 0, 0, 0 )
 shape = SubResource( 5 )
 
 [node name="MeshInstance2" type="MeshInstance" parent="Environment"]
