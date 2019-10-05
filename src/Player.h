@@ -22,7 +22,6 @@ namespace godot {
 		Input* input;
 		KinematicBody* me;
 		Vector3 velocity;
-		float currentGravity;
 
 	public:
 		bool isGliding = false;
@@ -33,7 +32,9 @@ namespace godot {
 		float maxWalkAngle;
 		float moveSpeed;
 		float jumpForce;
-		float gravity;
+		float gravityForce;
+		float frictionForce;
+		Vector3 gravity;
 		float airResistance;
 		float airControlLevel;
 		float turnSpeed;

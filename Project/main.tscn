@@ -28,8 +28,6 @@ albedo_color = Color( 0.894118, 0.588235, 0.109804, 1 )
 [node name="Player" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 19.2899, 3.13913, -7.42542 )
 script = ExtResource( 1 )
-gravity = -10.0
-jumpForce = 500.0
 
 [node name="KinematicBody-player" type="KinematicBody" parent="Player"]
 
@@ -48,12 +46,9 @@ current = true
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Environment"]
-transform = Transform( 20, 0, 0, 0, 1, 0, 0, 0, 20, -0.0606747, 0, 8.24027 )
+transform = Transform( 20, 0, 5.10894e-07, 0, 1, 0, -5.10894e-07, 0, 20, -0.0606747, 0, 8.24027 )
 mesh = SubResource( 4 )
 material/0 = ExtResource( 2 )
-
-[node name="Area" type="Area" parent="Environment/MeshInstance"]
-visible = false
 
 [node name="StaticBody" type="StaticBody" parent="Environment/MeshInstance"]
 transform = Transform( 1, 0, 0, 0, 1, -2.84217e-14, 0, 0, 1, 0, 0, 0 )
@@ -63,7 +58,7 @@ shape = SubResource( 5 )
 
 [node name="MeshInstance2" type="MeshInstance" parent="Environment"]
 editor/display_folded = true
-transform = Transform( 5.44284, 0, 0, 0, 0.707106, -6.40909, 0, 0.707106, 6.40909, 0.181, 1.51102, 2.506 )
+transform = Transform( 5.44284, 0, 0, 0, 0.707106, -6.40909, 0, 0.707106, 6.40909, 0.299198, 1.51102, 2.506 )
 mesh = SubResource( 4 )
 material/0 = SubResource( 6 )
 
