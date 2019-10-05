@@ -31,11 +31,17 @@ namespace godot {
         bool isDashing = false;
 		float maxWalkAngle;
 		float moveSpeed;
+
 		float jumpForce;
 		float gravityForce;
 		float frictionForce;
+		float airResistanceForce;
+		float dashForce;
+
 		Vector3 gravity;
-		float airResistance;
+		Vector3 friction;
+		Vector3 airResistance;
+
 		float airControlLevel;
 		float turnSpeed;
 		static void _register_methods();
