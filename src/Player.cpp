@@ -98,7 +98,7 @@ void Player::_physics_process(float delta) {
         isDashing = false;
 		
 		// Friction
-		forceVector += airResistance * Vector3(-xDelta,-yDelta, -zDelta);
+		forceVector += friction * Vector3(-xDelta,-yDelta, -zDelta);
 
 	} else {
 
