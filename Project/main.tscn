@@ -36,6 +36,7 @@ albedo_color = Color( 0.152941, 0.498039, 0.6, 1 )
 [node name="Spatial" type="Spatial"]
 
 [node name="Player" type="Spatial" parent="."]
+editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 19.2899, 3.13913, -7.42542 )
 script = ExtResource( 1 )
 gravityForce = 1.0
@@ -62,6 +63,7 @@ current = true
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Environment"]
+editor/display_folded = true
 transform = Transform( 20, 0, 5.10894e-07, 0, 1, 0, -5.10894e-07, 0, 20, -0.0606747, 0, 8.24027 )
 mesh = SubResource( 4 )
 material/0 = ExtResource( 2 )
@@ -116,20 +118,19 @@ material/0 = SubResource( 8 )
 [node name="CollisionShape" type="CollisionShape" parent="Environment/MeshInstance5/StaticBody"]
 shape = SubResource( 5 )
 
-[node name="Ledge" type="Spatial" parent="Environment"]
+[node name="Spatial" type="Spatial" parent="Environment"]
+editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.38297, 4.64693, 17.7005 )
 script = ExtResource( 3 )
 
-[node name="LedgeMesh" type="MeshInstance" parent="Environment/Ledge"]
+[node name="MeshInstance" type="MeshInstance" parent="Environment/Spatial"]
 transform = Transform( 0.1, 0, 0, 0, 0.25, 0, 0, 0, 1.5, -1.4229, -0.162048, -1.69758 )
 mesh = SubResource( 9 )
 material/0 = SubResource( 10 )
 
-[node name="LedgeArea" type="Area" parent="Environment/Ledge/LedgeMesh"]
-transform = Transform( 1, 0, 0, 0, 1, 0, -6.66134e-16, 0, 1, 0, 0, 0 )
+[node name="StaticBody" type="StaticBody" parent="Environment/Spatial/MeshInstance"]
 
-[node name="LedgeShape" type="CollisionShape" parent="Environment/Ledge/LedgeMesh/LedgeArea"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 4.44089e-16, 0, 1, 0, 0, 0 )
+[node name="LedgeShape" type="CollisionShape" parent="Environment/Spatial/MeshInstance/StaticBody"]
 shape = SubResource( 11 )
 
 [node name="Coin" parent="Environment" instance=ExtResource( 4 )]

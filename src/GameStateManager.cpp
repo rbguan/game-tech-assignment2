@@ -5,6 +5,7 @@ using namespace godot;
 void GameStateManager::_register_methods() {
 	register_method("_process", &GameStateManager::_process);
 	register_method("_ready", &GameStateManager::_ready);
+	register_method("_add_coin", &GameStateManager::_add_coin);
 	//register_property<GameStateManager, float>("maxTimeLimit", &GameStateManager::maxTimeLimit, 120.0);
 }
 
@@ -23,10 +24,17 @@ void GameStateManager::_init() {
 
 void GameStateManager::_ready() {
 	timeRemaining = 120.0;
+	coinsCollected = 0;
 	timeCount = cast_to<Label>(get_node("VBoxContainer/HBoxContainer/TimeCount"));
 	coinCount = cast_to<Label>(get_node("VBoxContainer/HBoxContainer2/CoinCount"));
 	//godot::Godot::print(timeCount->get_name());
 	
+}
+
+void GameStateManager::_add_coin() {
+	coinsCollected++;
+	std::string tmp = std::to_string(coinsCollected);
+	timeCount->set_text(tmp.c_str());
 }
 
 void GameStateManager::_process(float delta) {

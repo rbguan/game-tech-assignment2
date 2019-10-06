@@ -41,6 +41,7 @@ namespace godot {
 
 		void _process(float delta);
 		void _ready();
+		void _add_coin();
 
 	};
 
