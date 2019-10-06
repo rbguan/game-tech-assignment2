@@ -47,7 +47,8 @@ namespace godot {
 		void _process(float delta);
 		void _physics_process(float delta);
 		void _ready();
-
+		void _on_area_entered(Area *other);
+		void _collected_coin();
 	};
 
 }
