@@ -9,3 +9,5 @@ export_presets.cfg
 data_*/
 src/.vs/src/v15/Browse.VC.db
 src/.vs/src/v15/Browse.VC.opendb
+*.dylib
+src/*.os
