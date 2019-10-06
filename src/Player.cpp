@@ -14,6 +14,7 @@ void Player::_register_methods() {
 	register_property<Player, float>("moveSpeed", &Player::moveSpeed, 10.0);
 	register_property<Player, float>("jumpForce", &Player::jumpForce, 50.0);
 	register_property<Player, real_t>("walkableAngle", &Player::walkableAngle, 0.785398);
+	register_property<Player, float>("airControlLevel", &Player::airControlLevel, 1);
 }
 
 Player::Player() {
@@ -26,7 +27,7 @@ Player::~Player() {
 
 void Player::_init() {
 	input = Input::get_singleton();
-
+	airControlLevel= 1;
 	gravityForce = 1;
 	dashForce = 50;
 	airResistanceForce = 1;
@@ -56,10 +57,9 @@ void Player::_physics_process(float delta) {
 	Vector3 forceVector = Vector3(0,0,0);
 	gravity = Vector3(0,-gravityForce,0);
 	friction = Vector3(frictionForce,0,frictionForce);
-	
+	//velocity = velocity.linear_interpolate(Vector3(0, -1, 0), delta);
 	airResistance = Vector3(airResistanceForce,airResistanceForce,airResistanceForce);
 	me = Object::cast_to<KinematicBody>(get_node("KinematicBody-player"));
-
 	bool left = input->is_key_pressed(65);
 	bool right = input->is_key_pressed(68);
 	bool forward = input->is_key_pressed(87);
@@ -68,17 +68,34 @@ void Player::_physics_process(float delta) {
     bool dash = input->is_key_pressed(69);
 	
 	if(left && velocity.z < moveSpeed){
-		forceVector.z += moveSpeed;
+		if(!me->is_on_floor()){
+			forceVector.z += moveSpeed * airControlLevel;
+		} else{
+			forceVector.z += moveSpeed;
+		}
 	}
 	if(right && velocity.z > -moveSpeed){
-		forceVector.z += -moveSpeed;
+		if(!me->is_on_floor()){
+			forceVector.z += -moveSpeed * airControlLevel;
+		} else{
+			forceVector.z += -moveSpeed;
+		}
+		
 	}
 	
 	if(forward && velocity.x > -moveSpeed){
-		forceVector.x += -moveSpeed;
+		if(!me->is_on_floor()){
+			forceVector.x += -moveSpeed * airControlLevel;
+		} else{
+			forceVector.x += -moveSpeed;
+		}
 	} 
 	if(back && velocity.x < moveSpeed){
-		forceVector.x += moveSpeed;
+		if(!me->is_on_floor()){
+			forceVector.x += moveSpeed * airControlLevel;
+		} else{
+			forceVector.x += moveSpeed;
+		}
 	}
 
 	if(jump && !isJumping){
@@ -118,28 +135,26 @@ void Player::_physics_process(float delta) {
 		zDelta = (velocity.z) / abs(velocity.z);
 	}
 	
-
+	velocity += forceVector;
 	if(me->is_on_floor()) {
 		isJumping = false;
         isDashing = false;
 		
 		// Friction
-		forceVector += friction * Vector3(-xDelta,-yDelta, -zDelta);
-			
-
+		velocity += friction * Vector3(-xDelta,-yDelta, -zDelta);
 	} else {
 		std::cout << "notonfloor\n";
 		// Gravity
-		forceVector += gravity;
+		velocity += gravity;
 
 		// Air ResistanceS
 		if(isJumping && !me->is_on_floor()){
-			forceVector += airResistance * Vector3(-xDelta ,-yDelta, -zDelta) * airResistanceForce;
+			velocity += airResistance * Vector3(-xDelta ,-yDelta, -zDelta);
 		}
 		
 	}
 
-	velocity += forceVector;
+	
 	//Max Velocities
 	// if (abs(velocity.x) > moveSpeed) {velocity.x = moveSpeed;}
 	// if (abs(velocity.z) > moveSpeed) {velocity.z = moveSpeed;}
