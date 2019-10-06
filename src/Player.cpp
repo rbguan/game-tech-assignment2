@@ -100,16 +100,16 @@ void Player::_physics_process(float delta) {
 
 		if (dash && !isDashing && isJumping) {
 			isDashing = true;
-			if(right){
+			if(right && velocity.z > -dashForce){
 				forceVector.z += -dashForce;
 			}
-			if(left){
+			if(left && velocity.z < dashForce){
 				forceVector.z += dashForce;
 			}
-			if(forward){
+			if(forward && velocity.x > -dashForce){
 				forceVector.x += -dashForce;
 			}
-			if(back){
+			if(back && velocity.x < dashForce){
 				forceVector.x += dashForce;
 			}
 		}
