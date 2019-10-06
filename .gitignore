@@ -9,13 +9,5 @@ export_presets.cfg
 data_*/
 src/.vs/src/v15/Browse.VC.db
 src/.vs/src/v15/Browse.VC.opendb
-vc140.idb
-vc140.pdb
-vc140.idb
-vc140.pdb
-src/.vs/slnx.sqlite
-Project/bin/win64/libgame.pdb
-Project/bin/win64/libgame.dll
-Project/bin/win64/libgame.exp
-Project/bin/win64/libgame.ilk
-Project/bin/win64/libgame.lib
+*.dylib
+src/*.os
