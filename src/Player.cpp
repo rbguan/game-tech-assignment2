@@ -45,6 +45,21 @@ void Player::_ready(){
 
 void Player::_collected_coin() {
 	godot::Godot::print("Coin collected!");
+<<<<<<< HEAD
+=======
+}
+
+void Player::_hit_ledge() {
+	godot::Godot::print("Hit Ledge!");
+	velocity = Vector3(0,0,0);
+	isJumping = false;
+	isOnLedge = true;
+}
+
+void Player::_exit_ledge() {
+	godot::Godot::print("Exited Ledge!");
+	isOnLedge = false;
+>>>>>>> 56ec708ec6ff3627acee9868a095851fb5a1eedc
 }
 
 void Player::_process(float delta) {
@@ -52,6 +67,10 @@ void Player::_process(float delta) {
 }
 
 void Player::_physics_process(float delta) {
+
+	bool enable_movement = !isOnLedge;
+	bool enable_gravity = !isOnLedge;
+
 
 	//Handle Friction Here
 	Vector3 forceVector = Vector3(0,0,0);
@@ -67,6 +86,7 @@ void Player::_physics_process(float delta) {
 	bool jump = input->is_key_pressed(32);
     bool dash = input->is_key_pressed(69);
 	
+<<<<<<< HEAD
 	if(left && velocity.z < moveSpeed){
 		if(!me->is_on_floor()){
 			forceVector.z += moveSpeed * airControlLevel;
@@ -96,25 +116,63 @@ void Player::_physics_process(float delta) {
 		} else{
 			forceVector.x += moveSpeed;
 		}
+=======
+	if (enable_movement) {
+		if(left && velocity.z < moveSpeed){
+			forceVector.z += moveSpeed;
+		}
+		if(right && velocity.z > -moveSpeed){
+			forceVector.z += -moveSpeed;
+		}
+		
+		if(forward && velocity.x > -moveSpeed){
+			forceVector.x += -moveSpeed;
+		} 
+		if(back && velocity.x < moveSpeed){
+			forceVector.x += moveSpeed;
+		}
+
+		if (dash && !isDashing && isJumping) {
+			isDashing = true;
+			if(right){
+				forceVector.z += -dashForce;
+			}
+			if(left){
+				forceVector.z += dashForce;
+			}
+			if(forward){
+				forceVector.x += -dashForce;
+			}
+			if(back){
+				forceVector.x += dashForce;
+			}
+		}
+
+>>>>>>> 56ec708ec6ff3627acee9868a095851fb5a1eedc
 	}
 
 	if(jump && !isJumping){
 		isJumping = true;
 		forceVector.y += jumpForce;
 	}
-    if (dash && !isDashing && isJumping) {
-        isDashing = true;
-		if(right){
-			forceVector.z += -dashForce;
+
+	if (enable_gravity) {
+
+		int xDelta, yDelta, zDelta;
+		if (velocity.x == 0) {
+			xDelta = 0;
+		} else {
+			xDelta = (velocity.x) / abs(velocity.x);
 		}
-		if(left){
-			forceVector.z += dashForce;
+		if (velocity.y == 0) {
+			yDelta = 0;
+		} else {
+			yDelta = (velocity.y) / abs(velocity.y);
 		}
-		if(forward){
-			forceVector.x += -dashForce;
-		}
-		if(back){
-			forceVector.x += dashForce;
+		if (velocity.z == 0) {
+			zDelta = 0;
+		} else {
+			zDelta = (velocity.z) / abs(velocity.z);
 		}
     }
 
@@ -151,15 +209,18 @@ void Player::_physics_process(float delta) {
 		if(isJumping && !me->is_on_floor()){
 			velocity += airResistance * Vector3(-xDelta ,-yDelta, -zDelta);
 		}
-		
 	}
 
+<<<<<<< HEAD
 	
 	//Max Velocities
 	// if (abs(velocity.x) > moveSpeed) {velocity.x = moveSpeed;}
 	// if (abs(velocity.z) > moveSpeed) {velocity.z = moveSpeed;}
 	//if (velocity.y < -gravityForce) {velocity.y = -gravityForce;}
 
+=======
+	velocity += forceVector;
+>>>>>>> 56ec708ec6ff3627acee9868a095851fb5a1eedc
 	
 	if(me->is_on_floor()){
 		std::cout << "onfloor\n";
@@ -167,7 +228,6 @@ void Player::_physics_process(float delta) {
 			velocity.y = -1;
 		}
 	}
-	std::cout << velocity.y << "\n";
 	me->move_and_slide(velocity, Vector3(0,1,0), true, 4, walkableAngle);
 	
 }
