@@ -1,0 +1,36 @@
+[gd_scene format=2]
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_right = 1024.0
+margin_bottom = 600.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer"]
+margin_right = 34.0
+margin_bottom = 600.0
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer2"]
+margin_right = 34.0
+margin_bottom = 14.0
+text = "asdf1"
+valign = 1
+
+[node name="VBoxContainer4" type="VBoxContainer" parent="HBoxContainer"]
+margin_left = 38.0
+margin_right = 72.0
+margin_bottom = 600.0
+
+[node name="Label3" type="Label" parent="HBoxContainer/VBoxContainer4"]
+margin_right = 34.0
+margin_bottom = 14.0
+text = "asdf3"
+valign = 1
