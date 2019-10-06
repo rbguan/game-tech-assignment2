@@ -9,3 +9,10 @@ export_presets.cfg
 data_*/
 src/.vs/src/v15/Browse.VC.db
 src/.vs/src/v15/Browse.VC.opendb
+
+src/*.os
+
+.sconsign.dblite
+vc140.idb
+vc140.pdb
+.vscode/
