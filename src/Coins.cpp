@@ -24,6 +24,7 @@ void Coins::_init() {
 void Coins::_ready() {
 	
 	this->get_node("CoinArea")->connect("body_entered", this, "_body_entered");
+	
 }
 
 void Coins::_process(float delta) {
@@ -38,5 +39,6 @@ void Coins::_body_entered(Node *other) {
 	Player* pl = cast_to<Player>(other->get_parent());
 	//other->get_parent()->connect("collected_coin", pl, "_collected_coin");
 	pl->_collected_coin();
+	queue_free();
 
 }
