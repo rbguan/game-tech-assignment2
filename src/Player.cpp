@@ -45,8 +45,6 @@ void Player::_ready(){
 
 void Player::_collected_coin() {
 	godot::Godot::print("Coin collected!");
-<<<<<<< HEAD
-=======
 }
 
 void Player::_hit_ledge() {
@@ -59,7 +57,6 @@ void Player::_hit_ledge() {
 void Player::_exit_ledge() {
 	godot::Godot::print("Exited Ledge!");
 	isOnLedge = false;
->>>>>>> 56ec708ec6ff3627acee9868a095851fb5a1eedc
 }
 
 void Player::_process(float delta) {
@@ -86,37 +83,6 @@ void Player::_physics_process(float delta) {
 	bool jump = input->is_key_pressed(32);
     bool dash = input->is_key_pressed(69);
 	
-<<<<<<< HEAD
-	if(left && velocity.z < moveSpeed){
-		if(!me->is_on_floor()){
-			forceVector.z += moveSpeed * airControlLevel;
-		} else{
-			forceVector.z += moveSpeed;
-		}
-	}
-	if(right && velocity.z > -moveSpeed){
-		if(!me->is_on_floor()){
-			forceVector.z += -moveSpeed * airControlLevel;
-		} else{
-			forceVector.z += -moveSpeed;
-		}
-		
-	}
-	
-	if(forward && velocity.x > -moveSpeed){
-		if(!me->is_on_floor()){
-			forceVector.x += -moveSpeed * airControlLevel;
-		} else{
-			forceVector.x += -moveSpeed;
-		}
-	} 
-	if(back && velocity.x < moveSpeed){
-		if(!me->is_on_floor()){
-			forceVector.x += moveSpeed * airControlLevel;
-		} else{
-			forceVector.x += moveSpeed;
-		}
-=======
 	if (enable_movement) {
 		if(left && velocity.z < moveSpeed){
 			forceVector.z += moveSpeed;
@@ -148,7 +114,6 @@ void Player::_physics_process(float delta) {
 			}
 		}
 
->>>>>>> 56ec708ec6ff3627acee9868a095851fb5a1eedc
 	}
 
 	if(jump && !isJumping){
@@ -211,16 +176,7 @@ void Player::_physics_process(float delta) {
 		}
 	}
 
-<<<<<<< HEAD
-	
-	//Max Velocities
-	// if (abs(velocity.x) > moveSpeed) {velocity.x = moveSpeed;}
-	// if (abs(velocity.z) > moveSpeed) {velocity.z = moveSpeed;}
-	//if (velocity.y < -gravityForce) {velocity.y = -gravityForce;}
-
-=======
 	velocity += forceVector;
->>>>>>> 56ec708ec6ff3627acee9868a095851fb5a1eedc
 	
 	if(me->is_on_floor()){
 		std::cout << "onfloor\n";
