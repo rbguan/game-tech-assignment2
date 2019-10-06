@@ -1,9 +1,10 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://bin/player.gdns" type="Script" id=1]
 [ext_resource path="res://floor.tres" type="Material" id=2]
 [ext_resource path="res://bin/ledge.gdns" type="Script" id=3]
 [ext_resource path="res://Coin.tscn" type="PackedScene" id=4]
+[ext_resource path="res://bin/gamestatemanager.gdns" type="Script" id=5]
 
 [sub_resource type="CylinderShape" id=1]
 
@@ -59,7 +60,6 @@ transform = Transform( -0.0262555, -0.311152, 0.949997, -0.00859617, 0.95036, 0.
 current = true
 
 [node name="Environment" type="Spatial" parent="."]
-editor/display_folded = true
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Environment"]
@@ -145,6 +145,7 @@ margin_left = 20.0
 margin_top = 20.0
 margin_right = 140.0
 margin_bottom = 60.0
+script = ExtResource( 5 )
 
 [node name="ColorRect" type="ColorRect" parent="MarginContainer"]
 margin_right = 120.0
