@@ -37,6 +37,7 @@ namespace godot {
 		float frictionForce;
 		float airResistanceForce;
 		float dashForce;
+		real_t walkableAngle;
 
 		Vector3 gravity;
 		Vector3 friction;
@@ -54,6 +55,8 @@ namespace godot {
 		void _process(float delta);
 		void _physics_process(float delta);
 		void _ready();
+		void set_gravityForce(float p_gravityForce);
+		float get_gravityForce();
 
 	};
 

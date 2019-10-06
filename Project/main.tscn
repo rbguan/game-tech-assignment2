@@ -36,6 +36,12 @@ albedo_color = Color( 0.152941, 0.498039, 0.6, 1 )
 [node name="Player" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 19.2899, 3.13913, -7.42542 )
 script = ExtResource( 1 )
+gravityForce = 1.0
+dashForce = 30.0
+airResistanceForce = 0.0
+frictionForce = 5.0
+jumpForce = 10.0
+walkableAngle = 0.79
 
 [node name="KinematicBody-player" type="KinematicBody" parent="Player"]
 
@@ -65,7 +71,6 @@ transform = Transform( 1, 0, 0, 0, 1, -2.84217e-14, 0, 0, 1, 0, 0, 0 )
 shape = SubResource( 5 )
 
 [node name="MeshInstance2" type="MeshInstance" parent="Environment"]
-editor/display_folded = true
 transform = Transform( 5.44284, 0, 0, 0, 0.707106, -6.40909, 0, 0.707106, 6.40909, 0.299198, 1.51102, 2.506 )
 mesh = SubResource( 4 )
 material/0 = SubResource( 6 )
@@ -73,6 +78,7 @@ material/0 = SubResource( 6 )
 [node name="StaticBody" type="StaticBody" parent="Environment/MeshInstance2"]
 
 [node name="CollisionShape" type="CollisionShape" parent="Environment/MeshInstance2/StaticBody"]
+transform = Transform( 1, 0, 3.55271e-15, 0, 1, 8.65907e-15, 1.77636e-15, 1.05402e-16, 1, 0, 0, 0 )
 shape = SubResource( 5 )
 
 [node name="MeshInstance3" type="MeshInstance" parent="Environment"]
