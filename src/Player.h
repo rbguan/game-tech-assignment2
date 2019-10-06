@@ -29,6 +29,7 @@ namespace godot {
 		bool isJumping = false;
 		bool isFalling = false;
         bool isDashing = false;
+		bool isOnLedge = false;
 		float maxWalkAngle;
 		float moveSpeed;
 
@@ -58,6 +59,8 @@ namespace godot {
 		void set_gravityForce(float p_gravityForce);
 		float get_gravityForce();
 		void _collected_coin();
+		void _hit_ledge();
+		void _exit_ledge();
 
 	};
 
