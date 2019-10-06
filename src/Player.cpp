@@ -139,42 +139,24 @@ void Player::_physics_process(float delta) {
 		} else {
 			zDelta = (velocity.z) / abs(velocity.z);
 		}
-    }
 
-	int xDelta, yDelta, zDelta;
-	if (velocity.x == 0) {
-		xDelta = 0;
-	} else {
-		xDelta = (velocity.x) / abs(velocity.x);
-	}
-	if (velocity.y == 0) {
-		yDelta = 0;
-	} else {
-		yDelta = (velocity.y) / abs(velocity.y);
-	}
-	if (velocity.z == 0) {
-		zDelta = 0;
-	} else {
-		zDelta = (velocity.z) / abs(velocity.z);
-	}
-	
-	velocity += forceVector;
-	if(me->is_on_floor()) {
-		isJumping = false;
-        isDashing = false;
-		
-		// Friction
-		velocity += friction * Vector3(-xDelta,-yDelta, -zDelta);
-	} else {
-		std::cout << "notonfloor\n";
-		// Gravity
-		velocity += gravity;
+		if(me->is_on_floor()) {
+			isJumping = false;
+			isDashing = false;
+			
+			// Friction
+			velocity += friction * Vector3(-xDelta,-yDelta, -zDelta);
+		} else {
+			std::cout << "notonfloor\n";
+			// Gravity
+			velocity += gravity;
 
-		// Air ResistanceS
-		if(isJumping && !me->is_on_floor()){
-			velocity += airResistance * Vector3(-xDelta ,-yDelta, -zDelta);
+			// Air ResistanceS
+			if(isJumping && !me->is_on_floor()){
+				velocity += airResistance * Vector3(-xDelta ,-yDelta, -zDelta);
+			}
 		}
-	}
+    }
 
 	velocity += forceVector;
 	
