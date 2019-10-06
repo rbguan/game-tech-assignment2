@@ -62,6 +62,12 @@ namespace godot {
 		void _hit_ledge();
 		void _exit_ledge();
 
+	private:
+		void handle_gravity(Vector3& force);
+		void handle_movement(Vector3& force, bool left, bool right, bool forward, bool backward);
+		void handle_jump(Vector3& force, bool jump);
+		void handle_dash(Vector3& force, bool dash, bool right, bool left, bool forward, bool back);
+
 	};
 
 }
