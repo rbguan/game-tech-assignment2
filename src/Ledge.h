@@ -2,22 +2,26 @@
 #define LEDGE_H
 
 #include <Godot.hpp>
-#include <Spatial.hpp>
+#include <Area.hpp>
+
 
 namespace godot {
 
-class Ledge : public Spatial {
-	GODOT_CLASS(Ledge, Spatial)
+class Ledge : public Area {
+	GODOT_CLASS(Ledge, Area)
         
 public:
-	static void _register_methods();
+		static void _register_methods();
 
-	Ledge();
-	~Ledge();
+		Ledge();
+		~Ledge();
 
-	void _init(); // our initializer called by Godot
+		void _init(); // our initializer called by Godot
 
-};
+		void _ready();
+		void _body_entered(Node *other);
+		void _body_exited(Node *other);
+	};
 
 }
 
