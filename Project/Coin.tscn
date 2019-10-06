@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://bin/coins.gdns" type="Script" id=1]
+
+[sub_resource type="CapsuleMesh" id=10]
+
+[sub_resource type="SpatialMaterial" id=11]
+albedo_color = Color( 0.72549, 0.639216, 0.0745098, 1 )
+metallic = 0.32
+metallic_specular = 0.54
+
+[sub_resource type="CapsuleShape" id=12]
+
+[node name="Coin" type="MeshInstance"]
+editor/display_folded = true
+transform = Transform( 0.438637, 0, 1.65258e-08, 0, 0.454098, 0, 1.65258e-08, 0, 0.0605715, -4.16706e-07, 2.21911, 9.53312 )
+mesh = SubResource( 10 )
+material/0 = SubResource( 11 )
+script = ExtResource( 1 )
+
+[node name="CoinArea" type="Area" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="CoinArea"]
+shape = SubResource( 12 )

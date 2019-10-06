@@ -5,6 +5,8 @@ using namespace godot;
 void Player::_register_methods() {
 	register_method("_process", &Player::_process);
 	register_method("_physics_process", &Player::_physics_process);
+	register_method("_ready", &Player::_ready);
+	register_method("_collected_coin", &Player::_collected_coin);
 	register_property<Player, float>("gravityForce", &Player::set_gravityForce,&Player::get_gravityForce , 4.0);
 	register_property<Player, float>("dashForce", &Player::dashForce, 50.0);
 	register_property<Player, float>("airResistanceForce", &Player::airResistanceForce, 1.0);
@@ -38,6 +40,10 @@ void Player::_init() {
 void Player::_ready(){
 	
 	
+}
+
+void Player::_collected_coin() {
+	godot::Godot::print("Coin collected!");
 }
 
 void Player::_process(float delta) {

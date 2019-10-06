@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "Ledge.h"
+#include "Coins.h"
 
 extern "C" void GDN_EXPORT godot_gdnative_init(godot_gdnative_init_options *o) {
     godot::Godot::gdnative_init(o);
@@ -14,4 +15,5 @@ extern "C" void GDN_EXPORT godot_nativescript_init(void *handle) {
 
     godot::register_class<godot::Player>();
     godot::register_class<godot::Ledge>();
+	godot::register_class<godot::Coins>();
 }

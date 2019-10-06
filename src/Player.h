@@ -57,6 +57,7 @@ namespace godot {
 		void _ready();
 		void set_gravityForce(float p_gravityForce);
 		float get_gravityForce();
+		void _collected_coin();
 
 	};
 

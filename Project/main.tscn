@@ -1,8 +1,9 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://bin/player.gdns" type="Script" id=1]
 [ext_resource path="res://floor.tres" type="Material" id=2]
 [ext_resource path="res://bin/ledge.gdns" type="Script" id=3]
+[ext_resource path="res://Coin.tscn" type="PackedScene" id=4]
 
 [sub_resource type="CylinderShape" id=1]
 
@@ -115,6 +116,7 @@ material/0 = SubResource( 8 )
 shape = SubResource( 5 )
 
 [node name="Spatial" type="Spatial" parent="Environment"]
+editor/display_folded = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.38297, 4.64693, 17.7005 )
 script = ExtResource( 3 )
 
@@ -127,6 +129,9 @@ material/0 = SubResource( 10 )
 
 [node name="LedgeShape" type="CollisionShape" parent="Environment/Spatial/MeshInstance/StaticBody"]
 shape = SubResource( 11 )
+
+[node name="Coin" parent="Environment" instance=ExtResource( 4 )]
+transform = Transform( -4.37114e-08, 0, -0.0602808, 0, 1, 0, 1, 0, -2.63496e-09, -9.28477, 3.23999, 22.4527 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.096545, 0.995329, 0, -0.995329, 0.096545, 15.9037, 16.7669, -2.17494 )
