@@ -51,8 +51,6 @@ namespace godot {
 		void _process(float delta);
 		void _ready();
 		void _add_coin();
-		bool _get_is_key_pressed(int scancode);
-		void _input(InputEvent ev);
 
 	};
 

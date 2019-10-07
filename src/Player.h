@@ -11,7 +11,6 @@
 #include <InputEvent.hpp>
 #include <vector>
 #include <KinematicBody.hpp>
-#include <GameStateManager.h>
 
 namespace godot {
 
@@ -23,7 +22,7 @@ namespace godot {
 		Input* input;
 		KinematicBody* me;
 		Vector3 velocity;
-		GameStateManager* gamestate;
+		// GameStateManager* gamestate;
 
 	public:
 		bool isGliding = false;
