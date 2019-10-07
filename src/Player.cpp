@@ -49,18 +49,26 @@ void Player::_ready(){
 	
 }
 
-void Player::_collected_coin() {
-	godot::Godot::print("Coin collected!");
-	GameStateManager* temp = cast_to<GameStateManager>(get_node("/root/Spatial/MarginContainer"));
-	if (temp != nullptr) {
-		temp->_add_coin();
+void Player::_collected_coin(Coins *coin, bool touching) {
+	touchingCoin = touching;
+	if (touchingCoin) {
+		lastCoin = coin;
 	}
+	else {
+		lastCoin = nullptr;
+	}
+	
 }
 
-void Player::_collected_powerup() {
-	Godot::print("Powerup collected");
-	powerupTimer = 30;
-	hasPowerup = true;
+void Player::_collected_powerup(Powerups *powerup, bool touching) {
+	touchingPowerup = touching;
+	if (touchingPowerup) {
+		lastPowerup = powerup;
+	}
+	else {
+		lastPowerup = nullptr;
+	}
+	
 }
 
 void Player::_hit_ledge() {
@@ -105,9 +113,26 @@ void Player::_physics_process(float delta) {
 	bool jump = input->is_key_pressed(32); 		//SPACE
     bool dash = input->is_key_pressed(69); 		//E
 	bool glide = input->is_key_pressed(81); 	//Q
+	bool interaction = input->is_key_pressed(70); //F
 
 	if (!me->is_on_floor() && !isGliding && !hasPowerup) {
 		isGliding = glide;
+	}
+
+	if (interaction && touchingCoin) {
+		godot::Godot::print("Coin collected!");
+		GameStateManager* temp = cast_to<GameStateManager>(get_node("/root/Spatial/MarginContainer"));
+		temp->_add_coin();
+		touchingCoin = false;
+		lastCoin->queue_free();
+	}
+
+	if (interaction && touchingPowerup) {
+		Godot::print("Powerup collected");
+		powerupTimer = 30;
+		hasPowerup = true;
+		touchingPowerup = false;
+		lastPowerup->queue_free();
 	}
 
 	bool enable_movement = !isOnLedge && !isGliding;

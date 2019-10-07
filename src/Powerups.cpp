@@ -6,6 +6,7 @@ using namespace godot;
 void Powerups::_register_methods() {
 	register_method("_process", &Powerups::_process);
 	register_method("_body_entered", &Powerups::_body_entered);
+	register_method("_body_exited", &Powerups::_body_exited);
 	register_method("_ready", &Powerups::_ready);
 }
 
@@ -34,11 +35,14 @@ void Powerups::_process(float delta) {
 
 void Powerups::_body_entered(Node *other) {
 	
-	
-	//godot::Godot::print(other->get_parent()->get_name());
 	Player* pl = cast_to<Player>(other->get_parent());
-	//other->get_parent()->connect("collected_coin", pl, "_collected_coin");
-	pl->_collected_powerup();
-	queue_free();
+	pl->_collected_powerup(this, true);
+
+}
+
+void Powerups::_body_exited(Node *other) {
+
+	Player* pl = cast_to<Player>(other->get_parent());
+	pl->_collected_powerup(this, false);
 
 }

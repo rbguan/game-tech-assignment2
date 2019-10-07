@@ -33,6 +33,7 @@ namespace godot {
 		void _process(float delta);
 		void _ready();
 		void _body_entered(Node *other);
+		void _body_exited(Node *other);
 	};
 
 }

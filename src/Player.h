@@ -11,6 +11,8 @@
 #include <InputEvent.hpp>
 #include <vector>
 #include <KinematicBody.hpp>
+#include <Coins.h>
+#include <Powerups.h>
 
 namespace godot {
 
@@ -30,7 +32,12 @@ namespace godot {
 		bool isFalling = false;
         bool isDashing = false;
 		bool isOnLedge = false;
+		bool touchingPowerup = false;
+		bool touchingCoin = false;
 		bool hasPowerup = false;
+		Powerups* lastPowerup;
+		Coins* lastCoin;
+
 		float maxWalkAngle;
 		float moveSpeed;
 
@@ -60,8 +67,8 @@ namespace godot {
 		void _ready();
 		void set_gravityForce(float p_gravityForce);
 		float get_gravityForce();
-		void _collected_coin();
-		void _collected_powerup();
+		void _collected_coin(Coins *coin, bool touching);
+		void _collected_powerup(Powerups *powerup, bool touching);
 		void _hit_ledge();
 		void _exit_ledge();
 

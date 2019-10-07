@@ -6,6 +6,7 @@ using namespace godot;
 void Coins::_register_methods() {
 	register_method("_process", &Coins::_process);
 	register_method("_body_entered", &Coins::_body_entered);
+	register_method("_body_exited", &Coins::_body_exited);
 	register_method("_ready", &Coins::_ready);
 }
 
@@ -38,7 +39,13 @@ void Coins::_body_entered(Node *other) {
 	//godot::Godot::print(other->get_parent()->get_name());
 	Player* pl = cast_to<Player>(other->get_parent());
 	//other->get_parent()->connect("collected_coin", pl, "_collected_coin");
-	pl->_collected_coin();
-	queue_free();
+	pl->_collected_coin(this, true);
+
+}
+
+void Coins::_body_exited(Node *other) {
+
+	Player* pl = cast_to<Player>(other->get_parent());
+	pl->_collected_coin(this, false);
 
 }
