@@ -39,7 +39,7 @@ namespace godot {
 		float frictionForce;
 		float airResistanceForce;
 		float dashForce;
-		float powerupTimer;
+		float powerupTimer = 0;
 		real_t walkableAngle;
 
 		Vector3 gravity;
