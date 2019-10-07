@@ -11,3 +11,16 @@ src/.vs/src/v15/Browse.VC.db
 src/.vs/src/v15/Browse.VC.opendb
 *.dylib
 src/*.os
+vc140.pdb
+vc140.idb
+src/Player.obj
+src/Ledge.obj
+src/GameStateManager.obj
+src/gamelibrary.obj
+src/Coins.obj
+Project/bin/win64/libgame.pdb
+Project/bin/win64/libgame.lib
+Project/bin/win64/libgame.ilk
+Project/bin/win64/libgame.exp
+Project/bin/win64/libgame.dll
+.sconsign.dblite
