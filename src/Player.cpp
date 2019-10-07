@@ -83,9 +83,9 @@ void Player::_physics_process(float delta) {
 	bool right = input->is_key_pressed(68);
 	bool forward = input->is_key_pressed(87);
 	bool back = input->is_key_pressed(83);
-	bool jump = input->is_key_pressed(32);
-    bool dash = input->is_key_pressed(69);
-	bool glide = input->is_key_pressed(81);
+	bool jump = input->is_key_pressed(32); 		//SPACE
+    bool dash = input->is_key_pressed(69); 		//E
+	bool glide = input->is_key_pressed(81); 	//Q
 
 	if (!me->is_on_floor() && !isGliding) {
 		isGliding = glide;
