@@ -39,6 +39,7 @@ void Player::_init() {
 	velocity = Vector3(0,0,0);
 	walkableAngle = 0.785398;
 	gravity = Vector3(0,-gravityForce,0);
+
 }
 
 void Player::_ready(){
@@ -89,7 +90,7 @@ void Player::_physics_process(float delta) {
 	Vector3 gravityVector = gravity;
 
 	if (hasPowerup) {
-		gravityVector = gravity * 0.1;
+		gravityVector = gravity * 0.5;
 	}
 
 
