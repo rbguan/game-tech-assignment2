@@ -1,11 +1,13 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://bin/player.gdns" type="Script" id=1]
 [ext_resource path="res://floor.tres" type="Material" id=2]
 [ext_resource path="res://bin/ledge.gdns" type="Script" id=3]
-[ext_resource path="res://Powerup.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Coin.tscn" type="PackedScene" id=5]
+[ext_resource path="res://sounds/ruby.ogg" type="AudioStream" id=4]
+[ext_resource path="res://sounds/smw_coin.wav" type="AudioStream" id=5]
 [ext_resource path="res://bin/gamestatemanager.gdns" type="Script" id=6]
+[ext_resource path="res://Coin.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Powerup.tscn" type="PackedScene" id=8]
 
 [sub_resource type="CylinderShape" id=1]
 
@@ -43,8 +45,11 @@ gravityForce = 1.0
 dashForce = 30.0
 airResistanceForce = 0.0
 frictionForce = 5.0
+moveSpeed = null
 jumpForce = 10.0
 walkableAngle = 0.79
+airControlLevel = null
+movementMode = null
 
 [node name="KinematicBody-player" type="KinematicBody" parent="Player"]
 
@@ -85,7 +90,6 @@ transform = Transform( 1, 0, 3.55271e-15, 0, 1, 8.65907e-15, 1.77636e-15, 1.0540
 shape = SubResource( 5 )
 
 [node name="MeshInstance3" type="MeshInstance" parent="Environment"]
-editor/display_folded = true
 transform = Transform( 5.44284, 0, 0, 0, 0.293354, -8.66505, 0, 0.956003, 2.65891, 0.281, 8.55257, -3.99424 )
 mesh = SubResource( 4 )
 material/0 = SubResource( 7 )
@@ -96,7 +100,6 @@ material/0 = SubResource( 7 )
 shape = SubResource( 5 )
 
 [node name="MeshInstance4" type="MeshInstance" parent="Environment"]
-editor/display_folded = true
 transform = Transform( 2, 0, 0, 0, 0.5, 0, 0, 0, 2, -12.9184, 4.24663, 15.9958 )
 mesh = SubResource( 4 )
 material/0 = SubResource( 8 )
@@ -107,7 +110,6 @@ material/0 = SubResource( 8 )
 shape = SubResource( 5 )
 
 [node name="MeshInstance5" type="MeshInstance" parent="Environment"]
-editor/display_folded = true
 transform = Transform( 2, 0, 0, 0, 0.5, 0, 0, 0, 2, -12.9184, 4.68601, 5.19056 )
 mesh = SubResource( 4 )
 material/0 = SubResource( 8 )
@@ -133,10 +135,10 @@ transform = Transform( 1, 0, 0, 0, 1, 0, -6.66134e-16, 0, 1, 0, 0, 0 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 4.44089e-16, 0, 1, 0, 0, 0 )
 shape = SubResource( 11 )
 
-[node name="Powerup" parent="Environment" instance=ExtResource( 4 )]
+[node name="Powerup" parent="Environment" instance=ExtResource( 8 )]
 transform = Transform( -4.37114e-08, 0, -0.543978, 0, 1, 0, 1, 0, -2.37781e-08, -2.35344, 2.90127, 15.9464 )
 
-[node name="Coin" parent="Environment" instance=ExtResource( 5 )]
+[node name="Coin" parent="Environment" instance=ExtResource( 7 )]
 transform = Transform( -4.37114e-08, 0, -0.0602808, 0, 1, 0, 1, 0, -2.63496e-09, -9.28477, 3.23999, 22.4527 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
@@ -144,28 +146,30 @@ transform = Transform( 1, 0, 0, 0, 0.096545, 0.995329, 0, -0.995329, 0.096545, 1
 shadow_enabled = true
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-editor/display_folded = true
 margin_left = 20.0
 margin_top = 20.0
 margin_right = 140.0
 margin_bottom = 60.0
 script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="ColorRect" type="ColorRect" parent="MarginContainer"]
 margin_right = 120.0
-margin_bottom = 40.0
+margin_bottom = 67.0
 color = Color( 0, 0, 0, 1 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 margin_right = 120.0
-margin_bottom = 40.0
+margin_bottom = 67.0
 size_flags_horizontal = 3
 alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-margin_top = 4.0
+margin_top = 8.0
 margin_right = 120.0
-margin_bottom = 18.0
+margin_bottom = 22.0
 
 [node name="TimeTitle" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 margin_right = 61.0
@@ -181,9 +185,9 @@ custom_colors/font_color = Color( 0.4, 1, 0.929412, 1 )
 text = "120"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-margin_top = 22.0
+margin_top = 26.0
 margin_right = 120.0
-margin_bottom = 36.0
+margin_bottom = 40.0
 
 [node name="CoinTitle" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
 margin_right = 102.0
@@ -197,3 +201,27 @@ margin_right = 114.0
 margin_bottom = 14.0
 custom_colors/font_color = Color( 0.4, 1, 0.929412, 1 )
 text = "0"
+
+[node name="CoinSFX" type="AudioStreamPlayer" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+stream = ExtResource( 5 )
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+margin_top = 44.0
+margin_right = 120.0
+margin_bottom = 58.0
+
+[node name="Volume" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
+margin_right = 95.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0.4, 1, 0.929412, 1 )
+text = "Volume Level: "
+
+[node name="VolumeCount" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
+margin_left = 99.0
+margin_right = 107.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 0.4, 1, 0.929412, 1 )
+text = "0"
+
+[node name="BackgroundMusic" type="AudioStreamPlayer" parent="MarginContainer"]
+stream = ExtResource( 4 )

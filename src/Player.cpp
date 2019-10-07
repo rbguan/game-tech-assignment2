@@ -45,15 +45,16 @@ void Player::_init() {
 }
 
 void Player::_ready(){
-	
-	
+	gamestate = cast_to<GameStateManager>(get_node("/root/Spatial/MarginContainer"));
+	// input = gamestate->_get_input();
+
 }
 
 void Player::_collected_coin() {
 	godot::Godot::print("Coin collected!");
-	GameStateManager* temp = cast_to<GameStateManager>(get_node("/root/Spatial/MarginContainer"));
-	if (temp != nullptr) {
-		temp->_add_coin();
+	// GameStateManager* temp = cast_to<GameStateManager>(get_node("/root/Spatial/MarginContainer"));
+	if (gamestate != nullptr) {
+		gamestate->_add_coin();
 	}
 }
 
@@ -98,13 +99,41 @@ void Player::_physics_process(float delta) {
 
 	airResistance = Vector3(airResistanceForce,airResistanceForce,airResistanceForce);
 	me = Object::cast_to<KinematicBody>(get_node("KinematicBody-player"));
+	// if (gamestate != nullptr) {
+
 	bool left = input->is_key_pressed(65);
 	bool right = input->is_key_pressed(68);
 	bool forward = input->is_key_pressed(87);
 	bool back = input->is_key_pressed(83);
 	bool jump = input->is_key_pressed(32); 		//SPACE
     bool dash = input->is_key_pressed(69); 		//E
-	bool glide = input->is_key_pressed(81); 	//Q
+	bool glide = input->is_key_pressed(81);
+	bool comma = input->is_key_pressed(44);
+	bool period = input->is_key_pressed(46);
+
+	if (comma) {
+		gamestate->_set_volume(-5);
+	}
+
+	if (period) {
+		gamestate->_set_volume(5);
+	}
+
+	// bool left = gamestate->_get_is_key_pressed(65);
+	// bool right = gamestate->_get_is_key_pressed(68);
+	// bool forward = gamestate->_get_is_key_pressed(87);
+	// bool back = gamestate->_get_is_key_pressed(83);
+	// bool jump = gamestate->_get_is_key_pressed(32); 		//SPACE
+ //    bool dash = gamestate->_get_is_key_pressed(69); 		//E
+	// bool glide = gamestate->_get_is_key_pressed(81); 	//Q
+
+	// bool left = false;
+	// bool right = false;
+	// bool forward = false;
+	// bool back = false;
+	// bool jump = false; 		//SPACE
+ //    bool dash = false; 		//E
+	// bool glide = false;
 
 	if (!me->is_on_floor() && !isGliding && !hasPowerup) {
 		isGliding = glide;

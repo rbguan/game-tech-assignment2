@@ -14,6 +14,7 @@
 #include <InputEvent.hpp>
 #include <vector>
 #include <KinematicBody.hpp>
+#include <AudioStreamPlayer.hpp>
 #include <typeinfo>
 
 namespace godot {
@@ -23,14 +24,22 @@ namespace godot {
 
 	private:
 
-		//Input* input;
-		int coinsCollected;
-		float timeRemaining;
+		// Input* input;
+		int coinsCollected = 0;
+		float timeRemaining = 120.0;
 		Label* timeCount;
 		Label* coinCount;
+		Label* volumeCount;
+		AudioStreamPlayer* backgroundMusic;
+		AudioStreamPlayer* coinSFX;
+
 
 	public:
 		//float maxTimeLimit;
+
+		// Input* _get_input() {return input;} 
+
+		void _set_volume(float update);
 
 		static void _register_methods();
 
@@ -42,6 +51,8 @@ namespace godot {
 		void _process(float delta);
 		void _ready();
 		void _add_coin();
+		bool _get_is_key_pressed(int scancode);
+		void _input(InputEvent ev);
 
 	};
 
