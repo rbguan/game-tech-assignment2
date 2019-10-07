@@ -17,6 +17,7 @@ void Player::_register_methods() {
 	register_property<Player, float>("jumpForce", &Player::jumpForce, 50.0);
 	register_property<Player, real_t>("walkableAngle", &Player::walkableAngle, 0.785398);
 	register_property<Player, float>("airControlLevel", &Player::airControlLevel, 1);
+	register_property<Player, bool>("movementMode", &Player::movementMode, true);
 }
 
 Player::Player() {
@@ -39,6 +40,7 @@ void Player::_init() {
 	velocity = Vector3(0,0,0);
 	walkableAngle = 0.785398;
 	gravity = Vector3(0,-gravityForce,0);
+	movementMode = true;
 
 }
 
@@ -84,8 +86,6 @@ void Player::_process(float delta) {
 
 void Player::_physics_process(float delta) {
 
-
-
 	Vector3 forceVector = Vector3(0,0,0);
 	Vector3 gravityVector = gravity;
 
@@ -114,7 +114,12 @@ void Player::_physics_process(float delta) {
 	bool enable_gravity = !isOnLedge;
 	
 	if (enable_movement) {
-		handle_movement(forceVector, left, right, forward, back);
+		if(movementMode){
+			handle_movement(forceVector, left, right, forward, back);
+		} else{
+
+		}
+		
 		handle_dash(forceVector, dash, left, right, forward, back);
 	}
 
@@ -143,6 +148,22 @@ void Player::_physics_process(float delta) {
 }
 
 void Player::handle_movement(Vector3& force, bool left, bool right, bool forward, bool back) {
+	if(left && velocity.z < moveSpeed){
+		force.z += moveSpeed;
+	}
+	if(right && velocity.z > -moveSpeed){
+		force.z += -moveSpeed;
+	}
+	
+	if(forward && velocity.x > -moveSpeed){
+		force.x += -moveSpeed;
+	} 
+	if(back && velocity.x < moveSpeed){
+		force.x += moveSpeed;
+	}
+}
+
+void Player::handle_rotate_movement(Vector3& force, bool left, bool right, bool forward, bool back) {
 	if(left && velocity.z < moveSpeed){
 		force.z += moveSpeed;
 	}
