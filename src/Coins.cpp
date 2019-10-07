@@ -25,6 +25,7 @@ void Coins::_init() {
 void Coins::_ready() {
 	
 	this->get_node("CoinArea")->connect("body_entered", this, "_body_entered");
+	this->get_node("CoinArea")->connect("body_exited", this, "_body_exited");
 	
 }
 
@@ -47,5 +48,4 @@ void Coins::_body_exited(Node *other) {
 
 	Player* pl = cast_to<Player>(other->get_parent());
 	pl->_collected_coin(this, false);
-
 }

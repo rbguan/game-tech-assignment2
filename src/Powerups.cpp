@@ -25,7 +25,7 @@ void Powerups::_init() {
 void Powerups::_ready() {
 	
 	this->get_node("PowerupArea")->connect("body_entered", this, "_body_entered");
-	
+	this->get_node("PowerupArea")->connect("body_exited", this, "_body_exited");
 }
 
 void Powerups::_process(float delta) {
