@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "GameStateManager.h"
 
 using namespace godot;
 
@@ -45,6 +46,10 @@ void Player::_ready(){
 
 void Player::_collected_coin() {
 	godot::Godot::print("Coin collected!");
+	GameStateManager* temp = cast_to<GameStateManager>(get_node("/root/Spatial/MarginContainer"));
+	if (temp != nullptr) {
+		temp->_add_coin();
+	}
 }
 
 void Player::_hit_ledge() {

@@ -32,9 +32,9 @@ void GameStateManager::_ready() {
 }
 
 void GameStateManager::_add_coin() {
-	coinsCollected++;
+	coinsCollected += 1;
 	std::string tmp = std::to_string(coinsCollected);
-	timeCount->set_text(tmp.c_str());
+	coinCount->set_text(tmp.c_str());
 }
 
 void GameStateManager::_process(float delta) {
