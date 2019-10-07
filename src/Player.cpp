@@ -16,8 +16,10 @@ void Player::_register_methods() {
 	register_property<Player, float>("moveSpeed", &Player::moveSpeed, 10.0);
 	register_property<Player, float>("jumpForce", &Player::jumpForce, 50.0);
 	register_property<Player, real_t>("walkableAngle", &Player::walkableAngle, 0.785398);
+	register_property<Player, real_t>("rotationSpeed", &Player::rotationSpeed, 10);
 	register_property<Player, float>("airControlLevel", &Player::airControlLevel, 1);
 	register_property<Player, bool>("movementMode", &Player::movementMode, true);
+	register_property<Player, Vector3>("myForward", &Player::myForward, Vector3(0,0,-1));
 }
 
 Player::Player() {
@@ -41,7 +43,8 @@ void Player::_init() {
 	walkableAngle = 0.785398;
 	gravity = Vector3(0,-gravityForce,0);
 	movementMode = true;
-
+	rotationSpeed = 10;
+	myForward = Vector3(0,0,-1);
 }
 
 void Player::_ready(){
@@ -116,20 +119,23 @@ void Player::_physics_process(float delta) {
 	if (enable_movement) {
 		if(movementMode){
 			handle_movement(forceVector, left, right, forward, back);
+			handle_dash(forceVector, dash, left, right, forward, back);
 		} else{
-
+			handle_rotate_movement(forceVector, left, right, forward, back);
+			handle_rotate_dash(forceVector, dash, left, right, forward, back);
 		}
-		
-		handle_dash(forceVector, dash, left, right, forward, back);
 	}
 
 	handle_jump(forceVector, jump);
 
 	if (enable_gravity) {
+		Basis b = Basis(me->get_rotation());
 		if (isGliding && velocity.y < 0) {
 			Vector3 reduced_gravity = gravityVector * .1;
+			//forceVector = forceVector.rotated(Vector3(0,1,0), forceVector.angle_to(myForward));
 			handle_gravity(forceVector, reduced_gravity);
 		} else {
+			//forceVector = forceVector.rotated(Vector3(0,1,0), forceVector.angle_to(myForward));
 			handle_gravity(forceVector, gravityVector);
 		}
     }
@@ -164,18 +170,20 @@ void Player::handle_movement(Vector3& force, bool left, bool right, bool forward
 }
 
 void Player::handle_rotate_movement(Vector3& force, bool left, bool right, bool forward, bool back) {
-	if(left && velocity.z < moveSpeed){
-		force.z += moveSpeed;
+	Basis b = Basis(me->get_rotation());
+	if(left){
+		myForward.rotate(Vector3(0,1,0), rotationSpeed);
+		me->rotate_y(rotationSpeed);
 	}
-	if(right && velocity.z > -moveSpeed){
-		force.z += -moveSpeed;
+	if(right){
+		myForward.rotate(Vector3(0,1,0), -rotationSpeed);
+		me->rotate_y(-rotationSpeed);
 	}
-	
-	if(forward && velocity.x > -moveSpeed){
-		force.x += -moveSpeed;
+	if(forward){
+		force += -b.z;
 	} 
-	if(back && velocity.x < moveSpeed){
-		force.x += moveSpeed;
+	if(back){
+		force += b.z;
 	}
 }
 
@@ -183,6 +191,19 @@ void Player::handle_jump(Vector3& force, bool jump) {
 	if(jump && !isJumping){
 		isJumping = true;
 		force.y += jumpForce;
+	}
+}
+
+void Player::handle_rotate_dash(Vector3& force, bool dash, bool right, bool left, bool forward, bool back) {
+	if (dash && !isDashing && isJumping && !isGliding) {
+		Basis b = Basis(me->get_rotation());
+		isDashing = true;
+		if(forward){
+			force += -b.z * 2;
+		}
+		if(back){
+			force += b.z * 2;
+		}
 	}
 }
 

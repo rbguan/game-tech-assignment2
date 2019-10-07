@@ -41,10 +41,12 @@ namespace godot {
 		float dashForce;
 		float powerupTimer = 0;
 		real_t walkableAngle;
+		real_t rotationSpeed;
 
 		Vector3 gravity;
 		Vector3 friction;
 		Vector3 airResistance;
+		Vector3 myForward;
 
 		float airControlLevel;
 		float turnSpeed;
@@ -71,7 +73,8 @@ namespace godot {
 		void handle_rotate_movement(Vector3& force, bool left, bool right, bool forward, bool backward);
 		void handle_jump(Vector3& force, bool jump);
 		void handle_dash(Vector3& force, bool dash, bool right, bool left, bool forward, bool back);
-
+		void handle_rotate_dash(Vector3& force, bool dash, bool right, bool left, bool forward, bool back);
+		void handle_rotate_movement(Vector3& force, bool dash, bool right, bool left, bool forward, bool back);
 	};
 
 }
