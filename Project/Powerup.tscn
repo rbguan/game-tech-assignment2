@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://bin/powerups.gdns" type="Script" id=1]
+
+[sub_resource type="SpatialMaterial" id=1]
+albedo_color = Color( 0.227451, 0.87451, 1, 1 )
+script = ExtResource( 1 )
+
+[sub_resource type="PrismMesh" id=2]
+material = SubResource( 1 )
+
+[sub_resource type="BoxShape" id=3]
+
+[node name="Powerup" type="MeshInstance"]
+transform = Transform( 0.57477, 0, 2.16547e-08, 0, 0.595413, 0, 1.14131e-07, 0, 0.418321, -4.16706e-07, 2.21911, 9.53312 )
+mesh = SubResource( 2 )
+material/0 = null
+script = ExtResource( 1 )
+
+[node name="PowerupArea" type="Area" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="PowerupArea"]
+transform = Transform( 0.944529, 0, -7.55094e-09, 0, 0.949516, 0, 5.46804e-08, 0, 1.14495, 0, 0, 0 )
+shape = SubResource( 3 )
