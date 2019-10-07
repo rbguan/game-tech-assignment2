@@ -30,6 +30,7 @@ namespace godot {
 		bool isFalling = false;
         bool isDashing = false;
 		bool isOnLedge = false;
+		bool hasPowerup = false;
 		float maxWalkAngle;
 		float moveSpeed;
 
@@ -38,6 +39,7 @@ namespace godot {
 		float frictionForce;
 		float airResistanceForce;
 		float dashForce;
+		float powerupTimer;
 		real_t walkableAngle;
 
 		Vector3 gravity;
@@ -59,6 +61,7 @@ namespace godot {
 		void set_gravityForce(float p_gravityForce);
 		float get_gravityForce();
 		void _collected_coin();
+		void _collected_powerup();
 		void _hit_ledge();
 		void _exit_ledge();
 

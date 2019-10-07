@@ -8,6 +8,7 @@ void Player::_register_methods() {
 	register_method("_physics_process", &Player::_physics_process);
 	register_method("_ready", &Player::_ready);
 	register_method("_collected_coin", &Player::_collected_coin);
+	register_method("_collected_powerup", &Player::_collected_powerup);
 	register_property<Player, float>("gravityForce", &Player::set_gravityForce,&Player::get_gravityForce , 4.0);
 	register_property<Player, float>("dashForce", &Player::dashForce, 50.0);
 	register_property<Player, float>("airResistanceForce", &Player::airResistanceForce, 1.0);
@@ -37,6 +38,7 @@ void Player::_init() {
 	jumpForce = 25;
 	velocity = Vector3(0,0,0);
 	walkableAngle = 0.785398;
+	gravity = Vector3(0,-gravityForce,0);
 }
 
 void Player::_ready(){
@@ -52,6 +54,12 @@ void Player::_collected_coin() {
 	}
 }
 
+void Player::_collected_powerup() {
+	Godot::print("Powerup collected");
+	powerupTimer = 30;
+	hasPowerup = true;
+}
+
 void Player::_hit_ledge() {
 	godot::Godot::print("Hit Ledge!");
 	velocity = Vector3(0,0,0);
@@ -65,16 +73,26 @@ void Player::_exit_ledge() {
 }
 
 void Player::_process(float delta) {
-
+	if (powerupTimer > 0) {
+		powerupTimer -= delta;
+		if (powerupTimer <= 0) {
+			hasPowerup = false;
+		}
+	}
 }
 
 void Player::_physics_process(float delta) {
 
-	bool enable_movement = !isOnLedge || !isGliding;
-	bool enable_gravity = !isOnLedge;
+
 
 	Vector3 forceVector = Vector3(0,0,0);
-	gravity = Vector3(0,-gravityForce,0);
+	Vector3 gravityVector = gravity;
+
+	if (hasPowerup) {
+		gravityVector = gravity * 0.1;
+	}
+
+
 	friction = Vector3(frictionForce,0,frictionForce);
 
 	airResistance = Vector3(airResistanceForce,airResistanceForce,airResistanceForce);
@@ -87,9 +105,12 @@ void Player::_physics_process(float delta) {
     bool dash = input->is_key_pressed(69); 		//E
 	bool glide = input->is_key_pressed(81); 	//Q
 
-	if (!me->is_on_floor() && !isGliding) {
+	if (!me->is_on_floor() && !isGliding && !hasPowerup) {
 		isGliding = glide;
 	}
+
+	bool enable_movement = !isOnLedge && !isGliding;
+	bool enable_gravity = !isOnLedge;
 	
 	if (enable_movement) {
 		handle_movement(forceVector, left, right, forward, back);
@@ -100,10 +121,10 @@ void Player::_physics_process(float delta) {
 
 	if (enable_gravity) {
 		if (isGliding && velocity.y < 0) {
-			Vector3 reduced_gravity = gravity * .1;
+			Vector3 reduced_gravity = gravityVector * .1;
 			handle_gravity(forceVector, reduced_gravity);
 		} else {
-			handle_gravity(forceVector, gravity);
+			handle_gravity(forceVector, gravityVector);
 		}
     }
 
