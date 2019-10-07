@@ -70,7 +70,7 @@ void Player::_process(float delta) {
 
 void Player::_physics_process(float delta) {
 
-	bool enable_movement = !isOnLedge;
+	bool enable_movement = !isOnLedge || !isGliding;
 	bool enable_gravity = !isOnLedge;
 
 	Vector3 forceVector = Vector3(0,0,0);
@@ -85,6 +85,11 @@ void Player::_physics_process(float delta) {
 	bool back = input->is_key_pressed(83);
 	bool jump = input->is_key_pressed(32);
     bool dash = input->is_key_pressed(69);
+	bool glide = input->is_key_pressed(81);
+
+	if (!me->is_on_floor() && !isGliding) {
+		isGliding = glide;
+	}
 	
 	if (enable_movement) {
 		handle_movement(forceVector, left, right, forward, back);
@@ -94,7 +99,12 @@ void Player::_physics_process(float delta) {
 	handle_jump(forceVector, jump);
 
 	if (enable_gravity) {
-		handle_gravity(forceVector);
+		if (isGliding && velocity.y < 0) {
+			Vector3 reduced_gravity = gravity * .1;
+			handle_gravity(forceVector, reduced_gravity);
+		} else {
+			handle_gravity(forceVector, gravity);
+		}
     }
 
 	velocity += forceVector;
@@ -134,7 +144,7 @@ void Player::handle_jump(Vector3& force, bool jump) {
 }
 
 void Player::handle_dash(Vector3& force, bool dash, bool right, bool left, bool forward, bool back) {
-	if (dash && !isDashing && isJumping) {
+	if (dash && !isDashing && isJumping && !isGliding) {
 		isDashing = true;
 		if(right && velocity.z > -dashForce){
 			force.z += -dashForce;
@@ -150,7 +160,7 @@ void Player::handle_dash(Vector3& force, bool dash, bool right, bool left, bool 
 		}
 	}
 }
-void Player::handle_gravity(Vector3& force) {
+void Player::handle_gravity(Vector3& force, Vector3& curr_gravity) {
 	int xDelta, yDelta, zDelta;
 	if (velocity.x == 0) {
 		xDelta = 0;
@@ -171,13 +181,14 @@ void Player::handle_gravity(Vector3& force) {
 	if(me->is_on_floor()) {
 		isJumping = false;
 		isDashing = false;
-		
+		isGliding = false;
+
 		// Friction
 		velocity += friction * Vector3(-xDelta,-yDelta, -zDelta);
 	} else {
 		std::cout << "notonfloor\n";
 		// Gravity
-		velocity += gravity;
+		velocity += curr_gravity;
 
 		// Air ResistanceS
 		if(isJumping && !me->is_on_floor()){
