@@ -47,6 +47,7 @@ namespace godot {
 		Vector3 friction;
 		Vector3 airResistance;
 		Vector3 myForward;
+		float current_rotation; //in radians
 
 		float airControlLevel;
 		float turnSpeed;
@@ -73,8 +74,8 @@ namespace godot {
 		void handle_rotate_movement(Vector3& rotated_velocity, Vector3& force, bool left, bool right, bool forward, bool backward);
 		void handle_jump(Vector3& force, bool jump);
 		void handle_dash(Vector3& rotated_velocity, Vector3& force, bool dash, bool right, bool left, bool forward, bool back);
-		void handle_rotate_dash(Vector3& force, bool dash, bool right, bool left, bool forward, bool back);
 		void handle_rotate_movement(Vector3& force, bool dash, bool right, bool left, bool forward, bool back);
+		void handle_resistance();
 	};
 
 }

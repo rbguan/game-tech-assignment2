@@ -39,7 +39,7 @@ albedo_color = Color( 0.152941, 0.498039, 0.6, 1 )
 [node name="Spatial" type="Spatial"]
 
 [node name="Player" type="Spatial" parent="."]
-transform = Transform( 0.923563, 0, 0.383447, 0, 1, 0, -0.383447, 0, 0.923563, 19.2899, 3.13913, -7.42542 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 19.2899, 3.13913, -7.42542 )
 script = ExtResource( 1 )
 gravityForce = 1.0
 dashForce = 30.0
