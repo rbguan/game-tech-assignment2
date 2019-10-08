@@ -102,7 +102,6 @@ void Player::_process(float delta) {
 			hasPowerup = false;
 			// backgroundMusic->set_volume_db(powerupSFX->get_volume_db());
 			powerupSFX->stop();
-			backgroundMusic->play();
 		}
 	}
 }
@@ -143,9 +142,14 @@ void Player::_physics_process(float delta) {
 
 	bool muted_button = input->is_key_pressed(77); // M
 
-	if (muted_button) {
+	// TODO: stop doing this
+	interactionCooldown -= delta;
+	muteCooldown -= delta;
+
+	if (muted_button && muteCooldown < 0) {
 		gamestate->_toggle_sfx(!sfxMuted);
 		sfxMuted = !sfxMuted;
+		muteCooldown = 0.5;
 	}
 
 	if (comma) {
@@ -162,13 +166,15 @@ void Player::_physics_process(float delta) {
 		isGliding = glide;
 	}
 
-	if (interaction && touchingCoin) {
+	if (interaction && touchingCoin && interactionCooldown < 0) {
 		godot::Godot::print("Coin collected!");
 		gamestate->_add_coin();
-		coinSFX->play();
+		if (!sfxMuted)
+			coinSFX->play();
 		touchingCoin = false;
 		lastCoin->queue_free();
-	} else if (interaction && touchingPowerup) {
+		interactionCooldown = 0.5;
+	} else if (interaction && touchingPowerup && interactionCooldown < 0) {
 		Godot::print("Powerup collected");
 		powerupTimer = 10;
 		hasPowerup = true;
@@ -176,12 +182,14 @@ void Player::_physics_process(float delta) {
 		lastPowerup->queue_free();
 
 		gamestate->_activate_powerup();
-
-		// powerupSFX->set_volume_db(backgroundMusic->get_volume_db());
-		backgroundMusic->stop();
-		powerupSFX->play();
-	} else if (interaction) {
-		errorSFX->play();
+		if (!sfxMuted)
+			powerupSFX->play();
+		
+		interactionCooldown = 0.5;
+	} else if (interaction && interactionCooldown < 0) {
+		if (!sfxMuted)
+			errorSFX->play();
+		interactionCooldown = 0.5;
 	}
 
 	bool enable_movement = !isOnLedge && !isGliding;
