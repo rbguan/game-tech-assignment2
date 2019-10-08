@@ -30,18 +30,18 @@ albedo_color = Color( 0.960784, 0.85098, 0.258824, 1 )
 [sub_resource type="SpatialMaterial" id=8]
 albedo_color = Color( 0.0941176, 0.556863, 0.631373, 1 )
 
-[sub_resource type="SpatialMaterial" id=13]
+[sub_resource type="SpatialMaterial" id=9]
 albedo_color = Color( 0.960784, 0.85098, 0.258824, 1 )
 
-[sub_resource type="SpatialMaterial" id=9]
+[sub_resource type="SpatialMaterial" id=10]
 albedo_color = Color( 0.894118, 0.588235, 0.109804, 1 )
 
-[sub_resource type="CubeMesh" id=10]
+[sub_resource type="CubeMesh" id=11]
 
-[sub_resource type="SpatialMaterial" id=11]
+[sub_resource type="SpatialMaterial" id=12]
 albedo_color = Color( 0.152941, 0.498039, 0.6, 1 )
 
-[sub_resource type="BoxShape" id=12]
+[sub_resource type="BoxShape" id=13]
 
 [node name="Spatial" type="Spatial"]
 
@@ -141,7 +141,7 @@ shape = SubResource( 6 )
 [node name="MeshInstance10" type="MeshInstance" parent="Environment"]
 transform = Transform( 7.56074, 9.25596e-09, -1.41529e-07, -9.66693e-08, 0.761259, -9.9318, 2.32305e-08, 1.11625, 6.93135, 13.2204, 7.61938, -17.7992 )
 mesh = SubResource( 5 )
-material/0 = SubResource( 13 )
+material/0 = SubResource( 9 )
 
 [node name="StaticBody" type="StaticBody" parent="Environment/MeshInstance10"]
 
@@ -152,7 +152,7 @@ shape = SubResource( 6 )
 editor/display_folded = true
 transform = Transform( 2, 0, 0, 0, 0.5, 0, 0, 0, 2, -12.9184, 4.24663, 15.9958 )
 mesh = SubResource( 5 )
-material/0 = SubResource( 9 )
+material/0 = SubResource( 10 )
 
 [node name="StaticBody" type="StaticBody" parent="Environment/MeshInstance4"]
 
@@ -163,7 +163,7 @@ shape = SubResource( 6 )
 editor/display_folded = true
 transform = Transform( 2, 0, 0, 0, 0.5, 0, 0, 0, 2, -12.9184, 4.68601, 5.19056 )
 mesh = SubResource( 5 )
-material/0 = SubResource( 9 )
+material/0 = SubResource( 10 )
 
 [node name="StaticBody" type="StaticBody" parent="Environment/MeshInstance5"]
 
@@ -174,7 +174,7 @@ shape = SubResource( 6 )
 editor/display_folded = true
 transform = Transform( 2, 0, 0, 0, 0.5, 0, 0, 0, 2, -11.1529, 8.38218, -4.29557 )
 mesh = SubResource( 5 )
-material/0 = SubResource( 9 )
+material/0 = SubResource( 10 )
 
 [node name="StaticBody" type="StaticBody" parent="Environment/MeshInstance7"]
 
@@ -185,7 +185,7 @@ shape = SubResource( 6 )
 editor/display_folded = true
 transform = Transform( 2, 0, 0, 0, 0.5, 0, 0, 0, 2, -16.4335, 12.5097, -13.6985 )
 mesh = SubResource( 5 )
-material/0 = SubResource( 9 )
+material/0 = SubResource( 10 )
 
 [node name="StaticBody" type="StaticBody" parent="Environment/MeshInstance8"]
 
@@ -196,7 +196,7 @@ shape = SubResource( 6 )
 editor/display_folded = true
 transform = Transform( 2, 0, 0, 0, 0.5, 0, 0, 0, 2, -14.5024, 15.525, -21.64 )
 mesh = SubResource( 5 )
-material/0 = SubResource( 9 )
+material/0 = SubResource( 10 )
 
 [node name="StaticBody" type="StaticBody" parent="Environment/MeshInstance9"]
 
@@ -211,15 +211,15 @@ script = ExtResource( 7 )
 [node name="LedgeMesh" type="MeshInstance" parent="Environment/Ledge"]
 editor/display_folded = true
 transform = Transform( 0.1, 0, 0, 0, 0.25, 0, 0, 0, 1.5, -1.4229, -0.162048, -1.69758 )
-mesh = SubResource( 10 )
-material/0 = SubResource( 11 )
+mesh = SubResource( 11 )
+material/0 = SubResource( 12 )
 
 [node name="LedgeArea" type="Area" parent="Environment/Ledge/LedgeMesh"]
 transform = Transform( 1, 0, 0, 0, 1, 0, -6.66134e-16, 0, 1, 0, 0, 0 )
 
 [node name="LedgeShape" type="CollisionShape" parent="Environment/Ledge/LedgeMesh/LedgeArea"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 4.44089e-16, 0, 1, 0, 0, 0 )
-shape = SubResource( 12 )
+shape = SubResource( 13 )
 
 [node name="Ledge2" type="Spatial" parent="Environment"]
 editor/display_folded = true
@@ -228,15 +228,15 @@ script = ExtResource( 7 )
 
 [node name="LedgeMesh" type="MeshInstance" parent="Environment/Ledge2"]
 transform = Transform( 0.00410785, 1.64505e-09, -1.49873, 0.0150411, 0.247151, 0.00927581, 0.098777, -0.0376344, 0.0609156, 19.4483, -0.390921, -24.3669 )
-mesh = SubResource( 10 )
-material/0 = SubResource( 11 )
+mesh = SubResource( 11 )
+material/0 = SubResource( 12 )
 
 [node name="LedgeArea" type="Area" parent="Environment/Ledge2/LedgeMesh"]
 transform = Transform( 1, 0, 0, 0, 1, 0, -6.66134e-16, 0, 1, 0, 0, 0 )
 
 [node name="LedgeShape" type="CollisionShape" parent="Environment/Ledge2/LedgeMesh/LedgeArea"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 4.44089e-16, 0, 1, 0, 0, 0 )
-shape = SubResource( 12 )
+shape = SubResource( 13 )
 
 [node name="Ledge11" type="Spatial" parent="Environment"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.8978, 11.8143, 5.83489 )
@@ -244,15 +244,15 @@ script = ExtResource( 7 )
 
 [node name="LedgeMesh" type="MeshInstance" parent="Environment/Ledge11"]
 transform = Transform( 0.00410785, 1.64505e-09, -1.49873, 0.0150411, 0.247151, 0.00927581, 0.098777, -0.0376344, 0.0609156, 19.4483, -0.390921, -24.2231 )
-mesh = SubResource( 10 )
-material/0 = SubResource( 11 )
+mesh = SubResource( 11 )
+material/0 = SubResource( 12 )
 
 [node name="LedgeArea" type="Area" parent="Environment/Ledge11/LedgeMesh"]
 transform = Transform( 1, 0, 0, 0, 1, 0, -6.66134e-16, 0, 1, 0, 0, 0 )
 
 [node name="LedgeShape" type="CollisionShape" parent="Environment/Ledge11/LedgeMesh/LedgeArea"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 4.44089e-16, 0, 1, 0, 0, 0 )
-shape = SubResource( 12 )
+shape = SubResource( 13 )
 
 [node name="Ledge6" type="Spatial" parent="Environment"]
 editor/display_folded = true
@@ -261,15 +261,15 @@ script = ExtResource( 7 )
 
 [node name="LedgeMesh" type="MeshInstance" parent="Environment/Ledge6"]
 transform = Transform( 0.00410785, 1.64505e-09, -1.49873, 0.0150411, 0.247151, 0.00927581, 0.098777, -0.0376344, 0.0609156, 19.4483, -0.390921, -24.3669 )
-mesh = SubResource( 10 )
-material/0 = SubResource( 11 )
+mesh = SubResource( 11 )
+material/0 = SubResource( 12 )
 
 [node name="LedgeArea" type="Area" parent="Environment/Ledge6/LedgeMesh"]
 transform = Transform( 1, 0, 0, 0, 1, 0, -6.66134e-16, 0, 1, 0, 0, 0 )
 
 [node name="LedgeShape" type="CollisionShape" parent="Environment/Ledge6/LedgeMesh/LedgeArea"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 4.44089e-16, 0, 1, 0, 0, 0 )
-shape = SubResource( 12 )
+shape = SubResource( 13 )
 
 [node name="Ledge13" type="Spatial" parent="Environment"]
 editor/display_folded = true
@@ -278,15 +278,15 @@ script = ExtResource( 7 )
 
 [node name="LedgeMesh" type="MeshInstance" parent="Environment/Ledge13"]
 transform = Transform( 0.00410785, 1.64505e-09, -1.49873, 0.0150411, 0.247151, 0.00927581, 0.098777, -0.0376344, 0.0609156, 19.4483, -0.390921, -24.3669 )
-mesh = SubResource( 10 )
-material/0 = SubResource( 11 )
+mesh = SubResource( 11 )
+material/0 = SubResource( 12 )
 
 [node name="LedgeArea" type="Area" parent="Environment/Ledge13/LedgeMesh"]
 transform = Transform( 1, 0, 0, 0, 1, 0, -6.66134e-16, 0, 1, 0, 0, 0 )
 
 [node name="LedgeShape" type="CollisionShape" parent="Environment/Ledge13/LedgeMesh/LedgeArea"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 4.44089e-16, 0, 1, 0, 0, 0 )
-shape = SubResource( 12 )
+shape = SubResource( 13 )
 
 [node name="Ledge3" type="Spatial" parent="Environment"]
 editor/display_folded = true
@@ -296,15 +296,15 @@ script = ExtResource( 7 )
 [node name="LedgeMesh" type="MeshInstance" parent="Environment/Ledge3"]
 editor/display_folded = true
 transform = Transform( 0.00452812, 0.00693223, -1.49788, 0.0149199, 0.247054, 0.0513094, 0.098777, -0.0376344, 0.0609156, 25.9659, 1.25746, -18.3052 )
-mesh = SubResource( 10 )
-material/0 = SubResource( 11 )
+mesh = SubResource( 11 )
+material/0 = SubResource( 12 )
 
 [node name="LedgeArea" type="Area" parent="Environment/Ledge3/LedgeMesh"]
 transform = Transform( 1, 0, 0, 0, 1, 0, -6.66134e-16, 0, 1, 0, 0, 0 )
 
 [node name="LedgeShape" type="CollisionShape" parent="Environment/Ledge3/LedgeMesh/LedgeArea"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 4.44089e-16, 0, 1, 0, 0, 0 )
-shape = SubResource( 12 )
+shape = SubResource( 13 )
 
 [node name="Ledge12" type="Spatial" parent="Environment"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.8978, 11.8143, -1.46691 )
@@ -313,15 +313,15 @@ script = ExtResource( 7 )
 [node name="LedgeMesh" type="MeshInstance" parent="Environment/Ledge12"]
 editor/display_folded = true
 transform = Transform( 0.00452812, 0.00693223, -1.49788, 0.0490588, 0.217539, 0.0696125, 0.0870215, -0.122999, 0.0386973, 27.1541, 1.25747, -18.0906 )
-mesh = SubResource( 10 )
-material/0 = SubResource( 11 )
+mesh = SubResource( 11 )
+material/0 = SubResource( 12 )
 
 [node name="LedgeArea" type="Area" parent="Environment/Ledge12/LedgeMesh"]
 transform = Transform( 1, 0, 0, 0, 1, 0, -6.66134e-16, 0, 1, 0, 0, 0 )
 
 [node name="LedgeShape" type="CollisionShape" parent="Environment/Ledge12/LedgeMesh/LedgeArea"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 4.44089e-16, 0, 1, 0, 0, 0 )
-shape = SubResource( 12 )
+shape = SubResource( 13 )
 
 [node name="Ledge7" type="Spatial" parent="Environment"]
 editor/display_folded = true
@@ -331,15 +331,15 @@ script = ExtResource( 7 )
 [node name="LedgeMesh" type="MeshInstance" parent="Environment/Ledge7"]
 editor/display_folded = true
 transform = Transform( 0.00452812, 0.00693223, -1.49788, 0.0149199, 0.247054, 0.0513094, 0.098777, -0.0376344, 0.0609156, 25.9659, 1.25746, -18.3052 )
-mesh = SubResource( 10 )
-material/0 = SubResource( 11 )
+mesh = SubResource( 11 )
+material/0 = SubResource( 12 )
 
 [node name="LedgeArea" type="Area" parent="Environment/Ledge7/LedgeMesh"]
 transform = Transform( 1, 0, 0, 0, 1, 0, -6.66134e-16, 0, 1, 0, 0, 0 )
 
 [node name="LedgeShape" type="CollisionShape" parent="Environment/Ledge7/LedgeMesh/LedgeArea"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 4.44089e-16, 0, 1, 0, 0, 0 )
-shape = SubResource( 12 )
+shape = SubResource( 13 )
 
 [node name="Ledge10" type="Spatial" parent="Environment"]
 transform = Transform( 1, 9.73528e-11, 1.10134e-13, -9.73528e-11, 0.999997, 0.00222717, 1.10134e-13, -0.00222717, 0.999997, -10.8978, 15.4431, -3.92044 )
@@ -348,15 +348,15 @@ script = ExtResource( 7 )
 [node name="LedgeMesh" type="MeshInstance" parent="Environment/Ledge10"]
 editor/display_folded = true
 transform = Transform( 0.00452812, 0.00693223, -1.49788, 0.0528135, 0.211958, 0.0712366, 0.0847953, -0.132385, 0.0356193, 25.9659, 1.25735, -18.2551 )
-mesh = SubResource( 10 )
-material/0 = SubResource( 11 )
+mesh = SubResource( 11 )
+material/0 = SubResource( 12 )
 
 [node name="LedgeArea" type="Area" parent="Environment/Ledge10/LedgeMesh"]
 transform = Transform( 1, 0, 0, 0, 1, 0, -6.66134e-16, 0, 1, 0, 0, 0 )
 
 [node name="LedgeShape" type="CollisionShape" parent="Environment/Ledge10/LedgeMesh/LedgeArea"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 4.44089e-16, 0, 1, 0, 0, 0 )
-shape = SubResource( 12 )
+shape = SubResource( 13 )
 
 [node name="Ledge4" type="Spatial" parent="Environment"]
 editor/display_folded = true
@@ -366,15 +366,15 @@ script = ExtResource( 7 )
 [node name="LedgeMesh" type="MeshInstance" parent="Environment/Ledge4"]
 editor/display_folded = true
 transform = Transform( -0.00258685, 0.00962064, -1.49839, 0.0149199, 0.247054, 0.0513094, 0.0988469, -0.0370385, -0.0469578, 21.8488, 1.94253, -18.7963 )
-mesh = SubResource( 10 )
-material/0 = SubResource( 11 )
+mesh = SubResource( 11 )
+material/0 = SubResource( 12 )
 
 [node name="LedgeArea" type="Area" parent="Environment/Ledge4/LedgeMesh"]
 transform = Transform( 1, 0, 0, 0, 1, 0, -6.66134e-16, 0, 1, 0, 0, 0 )
 
 [node name="LedgeShape" type="CollisionShape" parent="Environment/Ledge4/LedgeMesh/LedgeArea"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 4.44089e-16, 0, 1, 0, 0, 0 )
-shape = SubResource( 12 )
+shape = SubResource( 13 )
 
 [node name="Ledge8" type="Spatial" parent="Environment"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.8978, 11.8143, -1.46691 )
@@ -383,15 +383,15 @@ script = ExtResource( 7 )
 [node name="LedgeMesh" type="MeshInstance" parent="Environment/Ledge8"]
 editor/display_folded = true
 transform = Transform( -0.00258685, 0.00962064, -1.49839, 0.0149199, 0.247054, 0.0513094, 0.0988469, -0.0370385, -0.0469578, 21.8488, 1.94253, -18.5149 )
-mesh = SubResource( 10 )
-material/0 = SubResource( 11 )
+mesh = SubResource( 11 )
+material/0 = SubResource( 12 )
 
 [node name="LedgeArea" type="Area" parent="Environment/Ledge8/LedgeMesh"]
 transform = Transform( 1, 0, 0, 0, 1, 0, -6.66134e-16, 0, 1, 0, 0, 0 )
 
 [node name="LedgeShape" type="CollisionShape" parent="Environment/Ledge8/LedgeMesh/LedgeArea"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 4.44089e-16, 0, 1, 0, 0, 0 )
-shape = SubResource( 12 )
+shape = SubResource( 13 )
 
 [node name="Ledge5" type="Spatial" parent="Environment"]
 editor/display_folded = true
@@ -401,15 +401,15 @@ script = ExtResource( 7 )
 [node name="LedgeMesh" type="MeshInstance" parent="Environment/Ledge5"]
 editor/display_folded = true
 transform = Transform( -0.00258685, 0.00962064, -1.49839, 0.0149199, 0.247054, 0.0513094, 0.0988469, -0.0370385, -0.0469578, 21.8488, 1.94253, -18.7963 )
-mesh = SubResource( 10 )
-material/0 = SubResource( 11 )
+mesh = SubResource( 11 )
+material/0 = SubResource( 12 )
 
 [node name="LedgeArea" type="Area" parent="Environment/Ledge5/LedgeMesh"]
 transform = Transform( 1, 0, 0, 0, 1, 0, -6.66134e-16, 0, 1, 0, 0, 0 )
 
 [node name="LedgeShape" type="CollisionShape" parent="Environment/Ledge5/LedgeMesh/LedgeArea"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 4.44089e-16, 0, 1, 0, 0, 0 )
-shape = SubResource( 12 )
+shape = SubResource( 13 )
 
 [node name="Ledge9" type="Spatial" parent="Environment"]
 transform = Transform( 1, 9.73528e-11, 1.10134e-13, -9.73528e-11, 0.999997, 0.00222717, 1.10134e-13, -0.00222717, 0.999997, -10.8978, 15.4431, -3.92044 )
@@ -418,15 +418,15 @@ script = ExtResource( 7 )
 [node name="LedgeMesh" type="MeshInstance" parent="Environment/Ledge9"]
 editor/display_folded = true
 transform = Transform( -0.00258685, 0.00962064, -1.49839, 0.0321764, 0.236601, 0.04219, 0.0946467, -0.0801726, -0.0552965, 21.8488, 1.94224, -18.6653 )
-mesh = SubResource( 10 )
-material/0 = SubResource( 11 )
+mesh = SubResource( 11 )
+material/0 = SubResource( 12 )
 
 [node name="LedgeArea" type="Area" parent="Environment/Ledge9/LedgeMesh"]
 transform = Transform( 1, 0, 0, 0, 1, 0, -6.66134e-16, 0, 1, 0, 0, 0 )
 
 [node name="LedgeShape" type="CollisionShape" parent="Environment/Ledge9/LedgeMesh/LedgeArea"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 4.44089e-16, 0, 1, 0, 0, 0 )
-shape = SubResource( 12 )
+shape = SubResource( 13 )
 
 [node name="Powerup" parent="Environment" instance=ExtResource( 8 )]
 transform = Transform( -4.37114e-08, 0, -0.543978, 0, 1, 0, 1, 0, -2.37781e-08, -2.35344, 2.90127, 15.9464 )
@@ -462,19 +462,18 @@ script = ExtResource( 10 )
 
 [node name="ColorRect" type="ColorRect" parent="MarginContainer"]
 margin_right = 120.0
-margin_bottom = 92.0
+margin_bottom = 86.0
 color = Color( 0, 0, 0, 1 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 margin_right = 120.0
-margin_bottom = 92.0
+margin_bottom = 86.0
 size_flags_horizontal = 3
 alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-margin_top = 3.0
 margin_right = 120.0
-margin_bottom = 17.0
+margin_bottom = 14.0
 
 [node name="TimeTitle" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 margin_right = 61.0
@@ -490,9 +489,9 @@ custom_colors/font_color = Color( 0.4, 1, 0.929412, 1 )
 text = "120"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-margin_top = 21.0
+margin_top = 18.0
 margin_right = 120.0
-margin_bottom = 35.0
+margin_bottom = 32.0
 
 [node name="CoinTitle" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
 margin_right = 102.0
@@ -508,9 +507,9 @@ custom_colors/font_color = Color( 0.4, 1, 0.929412, 1 )
 text = "0"
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-margin_top = 39.0
+margin_top = 36.0
 margin_right = 120.0
-margin_bottom = 53.0
+margin_bottom = 50.0
 
 [node name="Volume" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
 margin_right = 92.0
@@ -526,9 +525,9 @@ custom_colors/font_color = Color( 0.4, 1, 0.929412, 1 )
 text = "?"
 
 [node name="HBoxContainer4" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-margin_top = 57.0
+margin_top = 54.0
 margin_right = 120.0
-margin_bottom = 71.0
+margin_bottom = 68.0
 
 [node name="PowerupLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer4"]
 margin_bottom = 14.0
@@ -541,9 +540,9 @@ margin_bottom = 14.0
 custom_colors/font_color = Color( 0.4, 1, 0.929412, 1 )
 
 [node name="HBoxContainer5" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-margin_top = 75.0
+margin_top = 72.0
 margin_right = 120.0
-margin_bottom = 89.0
+margin_bottom = 86.0
 
 [node name="Muted" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer5"]
 margin_bottom = 14.0
