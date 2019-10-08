@@ -1,0 +1,16 @@
+GAME MANUAL
+Controls:
+    Walking ==================================================== WASD
+    Jumping ==================================================== Spacebar
+    Air Dash(Only possible in the air)================================== E
+    Gliding(While falling and the low gravity power-up cannot be active)======== Q
+    Item Interaction =============================================== F
+	BGM Volume Down ============================================ ,
+ 	BGM Volume Down ============================================ .
+	SFX Mute Toggle ============================================== M
+Interactable Objects:
+1.      Coins – You must be standing on it and press the interaction button to collect (F). The player’s coin score will then be increased.
+2.      Low gravity modifier – You must be standing on it and press the interaction button to consume (F). The player’s gravity will then be reduced and gliding will be disabled.
+Game Objective:
+
+The player is tasked with collecting as many coins as possible given the 120 second time limit. To accomplish this goal, the player must move, jump, dash, glide, climb, and activate low gravity mods to reach new areas containing coins.

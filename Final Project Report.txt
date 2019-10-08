@@ -1,0 +1,19 @@
+Final Project Report
+Team’s Goals:
+    Team Leviathan set out to create a complete player package with various features including movement, 
+        jumping, falling, walkable angles, ledge mechanics, gliding, air dashing, 2 item interactions 
+        (coins and gravity modifier), and a game timer. We also set out to create a camera control system, 
+        sound effects and background music, physics and collision detection, and informative GUI elements. 
+        Our game design focuses on manipulating the player movement mechanics and low gravity interactables 
+        in order to reach areas containing coins. The more coins the player collects within the game’s time 
+        limit, the higher the player’s score.
+What was easier than expected?
+    Some elements such dashing, gliding, and ledge mechanics were easier than originally anticipated. This 
+        was mainly due to the fact that these features were implemented later on once we had acquired knowledge 
+        by struggling to implement other mechanics. For example, coin interaction took some time to implement 
+        but then the ledge mechanics and the gravity interactable became easier due to acquired understanding 
+        of godot’s structure and API.
+What was harder than expected?
+    Smooth player movement. This feature, taken for granted in so many games today, proved much harder than 
+        anticipated. Also updating the GUI proved more challenging than we expected due to godot’s String 
+        bject vs c++ strings, which caused some confusion in our team.
