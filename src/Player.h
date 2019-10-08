@@ -13,6 +13,8 @@
 #include <KinematicBody.hpp>
 #include <Coins.h>
 #include <Powerups.h>
+#include <AudioStreamPlayer.hpp>
+#include "GameStateManager.h"
 
 namespace godot {
 
@@ -24,6 +26,11 @@ namespace godot {
 		Input* input;
 		KinematicBody* me;
 		Vector3 velocity;
+		GameStateManager* gamestate;
+		AudioStreamPlayer* backgroundMusic;
+		AudioStreamPlayer* coinSFX;
+		AudioStreamPlayer* powerupSFX;
+		AudioStreamPlayer* errorSFX;
 
 	public:
 		bool isGliding = false;
@@ -35,6 +42,7 @@ namespace godot {
 		bool touchingPowerup = false;
 		bool touchingCoin = false;
 		bool hasPowerup = false;
+		bool sfxMuted = false;
 		Powerups* lastPowerup;
 		Coins* lastCoin;
 

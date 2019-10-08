@@ -1,5 +1,5 @@
 #include "Player.h"
-#include "GameStateManager.h"
+// #include "GameStateManager.h"
 
 using namespace godot;
 
@@ -45,8 +45,16 @@ void Player::_init() {
 }
 
 void Player::_ready(){
-	
-	
+	gamestate = cast_to<GameStateManager>(get_node("/root/Spatial/MarginContainer"));
+		
+	backgroundMusic = cast_to<AudioStreamPlayer>(get_node("BGM"));
+	coinSFX = cast_to<AudioStreamPlayer>(get_node("CoinSFX"));
+	powerupSFX = cast_to<AudioStreamPlayer>(get_node("PowerupSFX"));
+	errorSFX = cast_to<AudioStreamPlayer>(get_node("ErrorSFX"));
+
+	backgroundMusic->set_volume_db(-30);
+	powerupSFX->set_volume_db(-30);
+	backgroundMusic->play();
 }
 
 void Player::_collected_coin(Coins *coin, bool touching) {
@@ -88,6 +96,9 @@ void Player::_process(float delta) {
 		powerupTimer -= delta;
 		if (powerupTimer <= 0) {
 			hasPowerup = false;
+			// backgroundMusic->set_volume_db(powerupSFX->get_volume_db());
+			powerupSFX->stop();
+			backgroundMusic->play();
 		}
 	}
 }
@@ -115,24 +126,50 @@ void Player::_physics_process(float delta) {
 	bool glide = input->is_key_pressed(81); 	//Q
 	bool interaction = input->is_key_pressed(70); //F
 
+	bool comma = input->is_key_pressed(44);
+	bool period = input->is_key_pressed(46);
+
+	bool muted_button = input->is_key_pressed(77); // M
+
+	if (muted_button) {
+		gamestate->_toggle_sfx(!sfxMuted);
+		sfxMuted = !sfxMuted;
+	}
+
+	if (comma) {
+		backgroundMusic->set_volume_db(backgroundMusic->get_volume_db() - 10.0 * delta);
+	}
+
+	if (period) {
+		backgroundMusic->set_volume_db(backgroundMusic->get_volume_db() + 10.0 * delta);
+	}
+
+	gamestate->_update_volume(backgroundMusic->get_volume_db());
+
 	if (!me->is_on_floor() && !isGliding && !hasPowerup) {
 		isGliding = glide;
 	}
 
 	if (interaction && touchingCoin) {
 		godot::Godot::print("Coin collected!");
-		GameStateManager* temp = cast_to<GameStateManager>(get_node("/root/Spatial/MarginContainer"));
-		temp->_add_coin();
+		gamestate->_add_coin();
+		coinSFX->play();
 		touchingCoin = false;
 		lastCoin->queue_free();
-	}
-
-	if (interaction && touchingPowerup) {
+	} else if (interaction && touchingPowerup) {
 		Godot::print("Powerup collected");
-		powerupTimer = 30;
+		powerupTimer = 10;
 		hasPowerup = true;
 		touchingPowerup = false;
 		lastPowerup->queue_free();
+
+		gamestate->_activate_powerup();
+
+		// powerupSFX->set_volume_db(backgroundMusic->get_volume_db());
+		backgroundMusic->stop();
+		powerupSFX->play();
+	} else if (interaction) {
+		errorSFX->play();
 	}
 
 	bool enable_movement = !isOnLedge && !isGliding;
