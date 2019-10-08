@@ -11,8 +11,8 @@ void Player::_register_methods() {
 	register_method("_collected_powerup", &Player::_collected_powerup);
 	register_property<Player, float>("gravityForce", &Player::set_gravityForce,&Player::get_gravityForce , 4.0);
 	register_property<Player, float>("dashForce", &Player::dashForce, 50.0);
-	register_property<Player, float>("airResistanceForce", &Player::airResistanceForce, 1.0);
-	register_property<Player, float>("frictionForce", &Player::frictionForce, 50.0);
+	register_property<Player, float>("airResistanceForce", &Player::airResistanceForce, .01);
+	register_property<Player, float>("frictionForce", &Player::frictionForce, .05);
 	register_property<Player, float>("moveSpeed", &Player::moveSpeed, 10.0);
 	register_property<Player, float>("jumpForce", &Player::jumpForce, 50.0);
 	register_property<Player, real_t>("walkableAngle", &Player::walkableAngle, 0.785398);
@@ -264,7 +264,12 @@ void Player::handle_resistance() {
 	if (velocity.length_squared() < 1) {
 		velocity = Vector3(0,0,0);
 	} else {
-		velocity = velocity.linear_interpolate(Vector3(0,0,0),.05);
+		if(me->is_on_floor()){
+			velocity = velocity.linear_interpolate(Vector3(0,0,0),frictionForce);
+		} else{
+			velocity = velocity.linear_interpolate(Vector3(0,0,0),airResistanceForce);
+		}
+		
 	}
 }
 

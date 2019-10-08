@@ -43,12 +43,11 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 19.2899, 3.13913, -7.42542 )
 script = ExtResource( 1 )
 gravityForce = 1.0
 dashForce = 30.0
-airResistanceForce = 0.0
-frictionForce = 0.0
+airResistanceForce = 0.01
+frictionForce = 0.05
 jumpForce = 14.0
 walkableAngle = 0.79
 rotationSpeed = 0.05
-movementMode = false
 
 [node name="KinematicBody-player" type="KinematicBody" parent="Player"]
 
