@@ -472,8 +472,9 @@ size_flags_horizontal = 3
 alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+margin_top = 3.0
 margin_right = 120.0
-margin_bottom = 14.0
+margin_bottom = 17.0
 
 [node name="TimeTitle" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 margin_right = 61.0
@@ -489,9 +490,9 @@ custom_colors/font_color = Color( 0.4, 1, 0.929412, 1 )
 text = "120"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-margin_top = 18.0
+margin_top = 21.0
 margin_right = 120.0
-margin_bottom = 32.0
+margin_bottom = 35.0
 
 [node name="CoinTitle" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
 margin_right = 102.0
@@ -507,9 +508,9 @@ custom_colors/font_color = Color( 0.4, 1, 0.929412, 1 )
 text = "0"
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-margin_top = 36.0
+margin_top = 39.0
 margin_right = 120.0
-margin_bottom = 50.0
+margin_bottom = 53.0
 
 [node name="Volume" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer3"]
 margin_right = 92.0
@@ -525,9 +526,9 @@ custom_colors/font_color = Color( 0.4, 1, 0.929412, 1 )
 text = "?"
 
 [node name="HBoxContainer4" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-margin_top = 54.0
+margin_top = 57.0
 margin_right = 120.0
-margin_bottom = 68.0
+margin_bottom = 71.0
 
 [node name="PowerupLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer4"]
 margin_bottom = 14.0
@@ -540,16 +541,9 @@ margin_bottom = 14.0
 custom_colors/font_color = Color( 0.4, 1, 0.929412, 1 )
 
 [node name="HBoxContainer5" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
-margin_top = 72.0
+margin_top = 75.0
 margin_right = 120.0
-margin_bottom = 92.0
+margin_bottom = 89.0
 
 [node name="Muted" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer5"]
-margin_top = 3.0
-margin_bottom = 17.0
-
-[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer5"]
-margin_left = 4.0
-margin_right = 52.0
-margin_bottom = 20.0
-text = "MUTE"
+margin_bottom = 14.0

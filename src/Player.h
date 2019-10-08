@@ -32,6 +32,9 @@ namespace godot {
 		AudioStreamPlayer* powerupSFX;
 		AudioStreamPlayer* errorSFX;
 
+		float interactionCooldown = 0.5;
+		float muteCooldown = 0.5;
+
 	public:
 		bool isGliding = false;
 		bool movementMode;
