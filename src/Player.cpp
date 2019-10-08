@@ -49,7 +49,6 @@ void Player::_init() {
 
 void Player::_ready(){
 	
-	
 }
 
 void Player::_collected_coin() {
@@ -91,6 +90,7 @@ void Player::_physics_process(float delta) {
 
 	Vector3 forceVector = Vector3(0,0,0);
 	Vector3 gravityVector = gravity;
+	
 
 	if (hasPowerup) {
 		gravityVector = gravity * 0.5;
@@ -101,6 +101,9 @@ void Player::_physics_process(float delta) {
 
 	airResistance = Vector3(airResistanceForce,airResistanceForce,airResistanceForce);
 	me = Object::cast_to<KinematicBody>(get_node("KinematicBody-player"));
+
+	Vector3 rotated_velocity = velocity.rotated(Vector3(0,1,0),me->get_global_transform().basis.x.angle_to(Vector3(1,0,0)));
+
 	bool left = input->is_key_pressed(65);
 	bool right = input->is_key_pressed(68);
 	bool forward = input->is_key_pressed(87);
@@ -118,11 +121,13 @@ void Player::_physics_process(float delta) {
 	
 	if (enable_movement) {
 		if(movementMode){
-			handle_movement(forceVector, left, right, forward, back);
-			handle_dash(forceVector, dash, left, right, forward, back);
+			handle_movement(rotated_velocity, forceVector, left, right, forward, back);
+			handle_dash(rotated_velocity, forceVector, dash, left, right, forward, back);
 		} else{
-			handle_rotate_movement(forceVector, left, right, forward, back);
-			handle_rotate_dash(forceVector, dash, left, right, forward, back);
+			handle_rotate_movement(rotated_velocity, forceVector, left, right, forward, back);
+			handle_dash(rotated_velocity,forceVector, dash, left, right, forward, back);
+
+			// handle_rotate_dash(forceVector, dash, left, right, forward, back);
 		}
 	}
 
@@ -132,15 +137,14 @@ void Player::_physics_process(float delta) {
 		Basis b = Basis(me->get_rotation());
 		if (isGliding && velocity.y < 0) {
 			Vector3 reduced_gravity = gravityVector * .1;
-			//forceVector = forceVector.rotated(Vector3(0,1,0), forceVector.angle_to(myForward));
-			handle_gravity(forceVector, reduced_gravity);
+			// forceVector = forceVector.rotated(Vector3(0,1,0), forceVector.angle_to(myForward));
+			handle_gravity(rotated_velocity, forceVector, reduced_gravity);
 		} else {
 			//forceVector = forceVector.rotated(Vector3(0,1,0), forceVector.angle_to(myForward));
-			handle_gravity(forceVector, gravityVector);
+			handle_gravity(rotated_velocity, forceVector, gravityVector);
 		}
     }
-
-	velocity += forceVector;
+	velocity += forceVector.rotated(Vector3(0,1,0),me->get_global_transform().basis.x.angle_to(Vector3(1,0,0)));
 	
 	if(me->is_on_floor()){
 		std::cout << "onfloor\n";
@@ -153,37 +157,35 @@ void Player::_physics_process(float delta) {
 	
 }
 
-void Player::handle_movement(Vector3& force, bool left, bool right, bool forward, bool back) {
-	if(left && velocity.z < moveSpeed){
+void Player::handle_movement(Vector3& rotated_velocity, Vector3& force, bool left, bool right, bool forward, bool back) {
+	if(left && rotated_velocity.z < moveSpeed){
 		force.z += moveSpeed;
 	}
-	if(right && velocity.z > -moveSpeed){
+	if(right && rotated_velocity.z > -moveSpeed){
 		force.z += -moveSpeed;
 	}
 	
-	if(forward && velocity.x > -moveSpeed){
+	if(forward && rotated_velocity.x > -moveSpeed){
 		force.x += -moveSpeed;
 	} 
-	if(back && velocity.x < moveSpeed){
+	if(back && rotated_velocity.x < moveSpeed){
 		force.x += moveSpeed;
 	}
 }
 
-void Player::handle_rotate_movement(Vector3& force, bool left, bool right, bool forward, bool back) {
+void Player::handle_rotate_movement(Vector3& rotated_velocity, Vector3& force, bool left, bool right, bool forward, bool back) {
 	Basis b = Basis(me->get_rotation());
 	if(left){
-		myForward.rotate(Vector3(0,1,0), rotationSpeed);
 		me->rotate_y(rotationSpeed);
 	}
 	if(right){
-		myForward.rotate(Vector3(0,1,0), -rotationSpeed);
 		me->rotate_y(-rotationSpeed);
 	}
 	if(forward){
-		force += -b.z;
+		force.x += -moveSpeed*.1;
 	} 
 	if(back){
-		force += b.z;
+		force.x += moveSpeed*.1;
 	}
 }
 
@@ -207,39 +209,39 @@ void Player::handle_rotate_dash(Vector3& force, bool dash, bool right, bool left
 	}
 }
 
-void Player::handle_dash(Vector3& force, bool dash, bool right, bool left, bool forward, bool back) {
+void Player::handle_dash(Vector3& rotated_velocity, Vector3& force, bool dash, bool right, bool left, bool forward, bool back) {
 	if (dash && !isDashing && isJumping && !isGliding) {
 		isDashing = true;
-		if(right && velocity.z > -dashForce){
+		if(right && rotated_velocity.z > -dashForce){
 			force.z += -dashForce;
 		}
-		if(left && velocity.z < dashForce){
+		if(left && rotated_velocity.z < dashForce){
 			force.z += dashForce;
 		}
-		if(forward && velocity.x > -dashForce){
+		if(forward && rotated_velocity.x > -dashForce){
 			force.x += -dashForce;
 		}
-		if(back && velocity.x < dashForce){
+		if(back && rotated_velocity.x < dashForce){
 			force.x += dashForce;
 		}
 	}
 }
-void Player::handle_gravity(Vector3& force, Vector3& curr_gravity) {
+void Player::handle_gravity(Vector3& rotated_velocity, Vector3& force, Vector3& curr_gravity) {
 	int xDelta, yDelta, zDelta;
-	if (velocity.x == 0) {
+	if (rotated_velocity.x == 0) {
 		xDelta = 0;
 	} else {
-		xDelta = (velocity.x) / abs(velocity.x);
+		xDelta = (rotated_velocity.x) / abs(rotated_velocity.x);
 	}
-	if (velocity.y == 0) {
+	if (rotated_velocity.y == 0) {
 		yDelta = 0;
 	} else {
-		yDelta = (velocity.y) / abs(velocity.y);
+		yDelta = (rotated_velocity.y) / abs(rotated_velocity.y);
 	}
-	if (velocity.z == 0) {
+	if (rotated_velocity.z == 0) {
 		zDelta = 0;
 	} else {
-		zDelta = (velocity.z) / abs(velocity.z);
+		zDelta = (rotated_velocity.z) / abs(rotated_velocity.z);
 	}
 
 	if(me->is_on_floor()) {
@@ -248,15 +250,15 @@ void Player::handle_gravity(Vector3& force, Vector3& curr_gravity) {
 		isGliding = false;
 
 		// Friction
-		velocity += friction * Vector3(-xDelta,-yDelta, -zDelta);
+		force += friction * Vector3(-xDelta,-yDelta, -zDelta);
 	} else {
 		std::cout << "notonfloor\n";
 		// Gravity
-		velocity += curr_gravity;
+		force += curr_gravity;
 
 		// Air ResistanceS
 		if(isJumping && !me->is_on_floor()){
-			velocity += airResistance * Vector3(-xDelta ,-yDelta, -zDelta);
+			force += airResistance * Vector3(-xDelta ,-yDelta, -zDelta);
 		}
 	}
 }
