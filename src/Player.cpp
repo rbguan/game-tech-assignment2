@@ -11,13 +11,15 @@ void Player::_register_methods() {
 	register_method("_collected_powerup", &Player::_collected_powerup);
 	register_property<Player, float>("gravityForce", &Player::set_gravityForce,&Player::get_gravityForce , 4.0);
 	register_property<Player, float>("dashForce", &Player::dashForce, 50.0);
-	register_property<Player, float>("airResistanceForce", &Player::airResistanceForce, 1.0);
-	register_property<Player, float>("frictionForce", &Player::frictionForce, 50.0);
+	register_property<Player, float>("airResistanceForce", &Player::airResistanceForce, .01);
+	register_property<Player, float>("frictionForce", &Player::frictionForce, .05);
 	register_property<Player, float>("moveSpeed", &Player::moveSpeed, 10.0);
 	register_property<Player, float>("jumpForce", &Player::jumpForce, 50.0);
 	register_property<Player, real_t>("walkableAngle", &Player::walkableAngle, 0.785398);
+	register_property<Player, real_t>("rotationSpeed", &Player::rotationSpeed, 10);
 	register_property<Player, float>("airControlLevel", &Player::airControlLevel, 1);
 	register_property<Player, bool>("movementMode", &Player::movementMode, true);
+	register_property<Player, Vector3>("myForward", &Player::myForward, Vector3(0,0,-1));
 }
 
 Player::Player() {
@@ -41,11 +43,12 @@ void Player::_init() {
 	walkableAngle = 0.785398;
 	gravity = Vector3(0,-gravityForce,0);
 	movementMode = true;
-
+	rotationSpeed = 10;
+	myForward = Vector3(0,0,0);
+	current_rotation = 0;
 }
 
 void Player::_ready(){
-	
 	
 }
 
@@ -96,6 +99,7 @@ void Player::_physics_process(float delta) {
 
 	Vector3 forceVector = Vector3(0,0,0);
 	Vector3 gravityVector = gravity;
+	
 
 	if (hasPowerup) {
 		gravityVector = gravity * 0.5;
@@ -106,6 +110,13 @@ void Player::_physics_process(float delta) {
 
 	airResistance = Vector3(airResistanceForce,airResistanceForce,airResistanceForce);
 	me = Object::cast_to<KinematicBody>(get_node("KinematicBody-player"));
+	// float rotation = me->get_global_transform().basis.x.angle_to(Vector3(1,0,0));
+	// if (rotation == 0) {
+	// 	rotation = me->get_global_transform().basis.z.angle_to(Vector3(0,0,1));
+	// }
+
+	Vector3 rotated_velocity = velocity.rotated(Vector3(0,1,0),current_rotation);
+
 	bool left = input->is_key_pressed(65);
 	bool right = input->is_key_pressed(68);
 	bool forward = input->is_key_pressed(87);
@@ -140,12 +151,13 @@ void Player::_physics_process(float delta) {
 	
 	if (enable_movement) {
 		if(movementMode){
-			handle_movement(forceVector, left, right, forward, back);
+			handle_movement(rotated_velocity, forceVector, left, right, forward, back);
 		} else{
-
+			handle_rotate_movement(rotated_velocity, forceVector, left, right, forward, back);
 		}
 		
-		handle_dash(forceVector, dash, left, right, forward, back);
+		handle_dash(rotated_velocity, forceVector, dash, left, right, forward, back);
+
 	}
 
 	handle_jump(forceVector, jump);
@@ -153,13 +165,13 @@ void Player::_physics_process(float delta) {
 	if (enable_gravity) {
 		if (isGliding && velocity.y < 0) {
 			Vector3 reduced_gravity = gravityVector * .1;
-			handle_gravity(forceVector, reduced_gravity);
+			handle_gravity(rotated_velocity, forceVector, reduced_gravity);
 		} else {
-			handle_gravity(forceVector, gravityVector);
+			handle_gravity(rotated_velocity, forceVector, gravityVector);
 		}
     }
 
-	velocity += forceVector;
+	velocity += forceVector.rotated(Vector3(0,1,0),current_rotation);
 	
 	if(me->is_on_floor()){
 		std::cout << "onfloor\n";
@@ -168,39 +180,47 @@ void Player::_physics_process(float delta) {
 		}
 	}
 
+	handle_resistance();
+
 	me->move_and_slide(velocity, Vector3(0,1,0), true, 4, walkableAngle);
 	
 }
 
-void Player::handle_movement(Vector3& force, bool left, bool right, bool forward, bool back) {
-	if(left && velocity.z < moveSpeed){
+void Player::handle_movement(Vector3& rotated_velocity, Vector3& force, bool left, bool right, bool forward, bool back) {
+	if(left && rotated_velocity.z < moveSpeed){
 		force.z += moveSpeed;
 	}
-	if(right && velocity.z > -moveSpeed){
+	if(right && rotated_velocity.z > -moveSpeed){
 		force.z += -moveSpeed;
 	}
 	
-	if(forward && velocity.x > -moveSpeed){
+	if(forward && rotated_velocity.x > -moveSpeed){
 		force.x += -moveSpeed;
 	} 
-	if(back && velocity.x < moveSpeed){
+	if(back && rotated_velocity.x < moveSpeed){
 		force.x += moveSpeed;
 	}
 }
 
-void Player::handle_rotate_movement(Vector3& force, bool left, bool right, bool forward, bool back) {
-	if(left && velocity.z < moveSpeed){
-		force.z += moveSpeed;
+void Player::handle_rotate_movement(Vector3& rotated_velocity, Vector3& force, bool left, bool right, bool forward, bool back) {
+	Basis b = Basis(me->get_rotation());
+	if(left){
+		me->rotate_y(rotationSpeed);
+		current_rotation += rotationSpeed;
 	}
-	if(right && velocity.z > -moveSpeed){
-		force.z += -moveSpeed;
+	if(right){
+		me->rotate_y(-rotationSpeed);
+		current_rotation -= rotationSpeed;
 	}
-	
-	if(forward && velocity.x > -moveSpeed){
-		force.x += -moveSpeed;
+	if(forward){
+		force.x += -moveSpeed*.1;
 	} 
-	if(back && velocity.x < moveSpeed){
-		force.x += moveSpeed;
+	if(back){
+		force.x += moveSpeed*.1;
+	}
+	if (abs(current_rotation) > 2*3.1415926535897) {
+		
+		current_rotation -= (current_rotation) / abs(current_rotation) * 2*3.1415926535897;
 	}
 }
 
@@ -211,40 +231,40 @@ void Player::handle_jump(Vector3& force, bool jump) {
 	}
 }
 
-void Player::handle_dash(Vector3& force, bool dash, bool right, bool left, bool forward, bool back) {
+void Player::handle_dash(Vector3& rotated_velocity, Vector3& force, bool dash, bool right, bool left, bool forward, bool back) {
 	if (dash && !isDashing && isJumping && !isGliding) {
 		isDashing = true;
-		if(right && velocity.z > -dashForce){
+		if(right && rotated_velocity.z > -dashForce){
 			force.z += -dashForce;
 		}
-		if(left && velocity.z < dashForce){
+		if(left && rotated_velocity.z < dashForce){
 			force.z += dashForce;
 		}
-		if(forward && velocity.x > -dashForce){
+		if(forward && rotated_velocity.x > -dashForce){
 			force.x += -dashForce;
 		}
-		if(back && velocity.x < dashForce){
+		if(back && rotated_velocity.x < dashForce){
 			force.x += dashForce;
 		}
 	}
 }
-void Player::handle_gravity(Vector3& force, Vector3& curr_gravity) {
-	int xDelta, yDelta, zDelta;
-	if (velocity.x == 0) {
-		xDelta = 0;
-	} else {
-		xDelta = (velocity.x) / abs(velocity.x);
-	}
-	if (velocity.y == 0) {
-		yDelta = 0;
-	} else {
-		yDelta = (velocity.y) / abs(velocity.y);
-	}
-	if (velocity.z == 0) {
-		zDelta = 0;
-	} else {
-		zDelta = (velocity.z) / abs(velocity.z);
-	}
+void Player::handle_gravity(Vector3& rotated_velocity, Vector3& force, Vector3& curr_gravity) {
+	// int xDelta, yDelta, zDelta;
+	// if (rotated_velocity.x == 0) {
+	// 	xDelta = 0;
+	// } else {
+	// 	xDelta = (rotated_velocity.x) / abs(rotated_velocity.x);
+	// }
+	// if (rotated_velocity.y == 0) {
+	// 	yDelta = 0;
+	// } else {
+	// 	yDelta = (rotated_velocity.y) / abs(rotated_velocity.y);
+	// }
+	// if (rotated_velocity.z == 0) {
+	// 	zDelta = 0;
+	// } else {
+	// 	zDelta = (rotated_velocity.z) / abs(rotated_velocity.z);
+	// }
 
 	if(me->is_on_floor()) {
 		isJumping = false;
@@ -252,16 +272,29 @@ void Player::handle_gravity(Vector3& force, Vector3& curr_gravity) {
 		isGliding = false;
 
 		// Friction
-		velocity += friction * Vector3(-xDelta,-yDelta, -zDelta);
+		// force += friction * Vector3(-xDelta,-yDelta, -zDelta);
 	} else {
-		std::cout << "notonfloor\n";
+		// std::cout << "notonfloor\n";
 		// Gravity
-		velocity += curr_gravity;
+		force += curr_gravity;
 
-		// Air ResistanceS
-		if(isJumping && !me->is_on_floor()){
-			velocity += airResistance * Vector3(-xDelta ,-yDelta, -zDelta);
+		// // Air ResistanceS
+		// if(isJumping && !me->is_on_floor()){
+		// 	force += airResistance * Vector3(-xDelta ,-yDelta, -zDelta);
+		// }
+	}
+}
+
+void Player::handle_resistance() {
+	if (velocity.length_squared() < 1) {
+		velocity = Vector3(0,0,0);
+	} else {
+		if(me->is_on_floor()){
+			velocity = velocity.linear_interpolate(Vector3(0,0,0),frictionForce);
+		} else{
+			velocity = velocity.linear_interpolate(Vector3(0,0,0),airResistanceForce);
 		}
+		
 	}
 }
 
